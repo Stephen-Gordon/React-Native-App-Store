@@ -18,7 +18,6 @@ import {
 import { useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 // tamagui config
 /* import '@tamagui/core/reset.css' */
 import { TamaguiProvider } from 'tamagui'
@@ -27,10 +26,7 @@ import config from './tamagui.config'
 import { Button, Text } from 'tamagui'
 
 export default function App() {
-  const [darkmode, setDarkmode] = useState(false);
-  const [device, setDevice] = useState(false);
-  const { width } = useWindowDimensions();
-  const [theme, setTheme] = useState("dim");
+
   const [isOpen, setIsOpen] = useState(false);
 
   const bottomSheetModalRef = useRef(null);
@@ -68,7 +64,6 @@ export default function App() {
               <Text
                 // can add theme values
                 color="$white"
-                fontFamily="$body"
                 // or just use direct values
                 fontSize={20}
                 hoverStyle={{
