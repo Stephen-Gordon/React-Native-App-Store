@@ -4,13 +4,13 @@ import { H4, Input, YGroup, Button, YStack,   } from 'tamagui'
 import { useState } from "react";
 import axios from "axios";
 
-interface LoginForm {
+interface RegisterForm {
     email?: string;
     password?: string;
     full_name?: string;
 }
 export default function RegisterForm() {
-    const [form, setForm] = useState<LoginForm>();
+    const [form, setForm] = useState<RegisterForm>();
     const [error, setError] = useState("");
  
     const handleChange = (e: any) => {
@@ -27,6 +27,7 @@ export default function RegisterForm() {
             .post("https://festivals-api.vercel.app/api/users/register", form)
             .then((response: any) => {
                 console.log(response.data);
+                
             })
             .catch((err) => {
                 console.error(err);

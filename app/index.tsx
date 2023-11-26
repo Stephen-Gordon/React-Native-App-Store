@@ -33,20 +33,17 @@ export default function Page() {
           >
           App Store
           </Text>
+          { session }
 
           {(!session) ? <SheetDemo/> : (
             <>
-              <Link href={'/festivals'} asChild>
-                <Button  />
-              </Link>
-              <Text>You are logged in</Text>
-              <Button onPress={signOut} >Logout</Button>
+              <Apps/> 
             </>
           )}
 
             
             
-        {/* <Apps/> */}
+        
       </ScrollView>
       </Theme>
       
