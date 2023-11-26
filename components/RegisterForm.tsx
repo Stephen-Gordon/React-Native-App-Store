@@ -4,18 +4,12 @@ import { H4, Input, YGroup, Button, YStack,   } from 'tamagui'
 import { useState } from "react";
 import axios from "axios";
 
-import { useSession } from '../contexts/AuthContext';
-
-
 interface LoginForm {
     email?: string;
     password?: string;
     full_name?: string;
 }
-export default function LoginForm() {
-
-    const { signIn } = useSession();
-
+export default function RegisterForm() {
     const [form, setForm] = useState<LoginForm>();
     const [error, setError] = useState("");
  
@@ -30,23 +24,20 @@ export default function LoginForm() {
     const handleSubmit = () => {
         console.log(form);
         axios
-            .post("https://festivals-api.vercel.app/api/users/login", form)
+            .post("https://festivals-api.vercel.app/api/users/register", form)
             .then((response: any) => {
                 console.log(response.data);
-                signIn(response.data.token);
             })
             .catch((err) => {
                 console.error(err);
                 setError(err);
             });
-
     };
     return (
         <>
         
-            <H4>Login</H4>
+            <H4>Register</H4>
 
-           
             <YStack space="$3">
                 <YGroup >
                     <YGroup.Item>
@@ -62,7 +53,7 @@ export default function LoginForm() {
                         <Input
                             size="$6" 
                             onChange={handleChange}
-                            placeholder="full name"
+                            placeholder="full_name"
                             value={form?.full_name}
                             id="full_name"
                         />
@@ -79,7 +70,7 @@ export default function LoginForm() {
                     
                     
                 </YGroup>
-                <Button onPress={handleSubmit} >Go</Button>
+                <Button onPress={handleSubmit}>Go</Button>
 
                 
 

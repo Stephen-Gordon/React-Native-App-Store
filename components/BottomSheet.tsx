@@ -13,104 +13,60 @@ import {
 } from "@gorhom/bottom-sheet";
 
 // React
-import { useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useEffect  } from "react";
 
 // tamagui components
 import { Button, Text } from 'tamagui'
 import LoginForm from "./LoginForm";
 
 
-export default function BottomSheet () {
 
-    const [isOpen, setIsOpen] = useState(false);
+export default function BottomSheet() {
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-    const bottomSheetModalRef = useRef(null);
+  // variables
+  const snapPoints = useMemo(() => ["25%", "90%"], []);
 
-    const snapPoints = ["25%", "48%", "75%"];
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
-    function handlePresentModal() {
-        bottomSheetModalRef.current?.present();
-        setTimeout(() => {
-        setIsOpen(true);
-        }, 100);
-    }
+  useEffect(() => {
+    handlePresentModalPress();
+  }, []); 
 
-    return (
-        <>
-           
-                <BottomSheetModalProvider>
-                    <View
-                    style={[
-                        styles.container,
-                        { backgroundColor: isOpen ? "gray" : "white" },
-                    ]}
-                    >
-                    <Button  onPress={handlePresentModal} />
-                    <Button>Lorem ipsum</Button>
-                    <StatusBar style="auto" />
-                    <BottomSheetModal
-                        ref={bottomSheetModalRef}
-                        index={1}
-                        snapPoints={snapPoints}
-                        backgroundStyle={{ borderRadius: 50 }}
-                        onDismiss={() => setIsOpen(false)}
-                    >
-                        <View style={styles.contentContainer}>
-                        <Text
-                            // can add theme values
-                            color="$white"
-                            // or just use direct values
-                            fontSize={20}
-                            hoverStyle={{
-                            color: '$colorHover',
-                            }}
-                        >
-                            Login
-                        </Text>
-                        <LoginForm/>
+  return (
+          <BottomSheetModalProvider>
+            <View>
 
-                        </View>
-                    </BottomSheetModal>
-                    </View>
-                </BottomSheetModalProvider>
-    
-        </>
-    )
+              <BottomSheetModal
+                ref={bottomSheetModalRef}
+                index={1}
+                snapPoints={snapPoints}
+                onChange={handleSheetChanges}
+              >
+                <View style={styles.contentContainer}>
+                  <LoginForm/>
+                </View>
+              </BottomSheetModal>
+            </View>
+          </BottomSheetModalProvider>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gray",
-    alignItems: "center",
+    padding: 24,
     justifyContent: "center",
+    backgroundColor: "grey",
   },
   contentContainer: {
     flex: 1,
     alignItems: "center",
-    paddingHorizontal: 15,
-  },
-  row: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 10,
-  },
-  title: {
-    fontWeight: "900",
-    letterSpacing: 0.5,
-    fontSize: 16,
-  },
-  subtitle: {
-    color: "#101318",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  description: {
-    color: "#56636F",
-    fontSize: 13,
-    fontWeight: "normal",
-    width: "100%",
   },
 });

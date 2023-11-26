@@ -6,30 +6,47 @@ import config from '../tamagui.config'
 // tamagui components
 import { Button, Text, Theme } from 'tamagui'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
+import { Link } from 'expo-router';
 //components
 import Apps from "../components/Apps"
-import BottomSheet from '../components/BottomSheet'
+
+import { SheetDemo } from '../components/Sheet';
+import { useSession } from '../contexts/AuthContext';
 
 export default function Page() {
+
+    const { session, signOut } = useSession();
+
+
   return (
     <>
     <TamaguiProvider config={config}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-      <Theme name="dark">
-        
-        <BottomSheet/>
+      <Theme >
         <ScrollView>
-            <Text
+          <Text
             color="$white"
             fontSize={20}
             hoverStyle={{
                 color: '$colorHover',
             }}
-        >
-        App Store
-        </Text>
-        <Apps/>
+          >
+          App Store
+          </Text>
+
+          {(!session) ? <SheetDemo/> : (
+            <>
+              <Link href={'/festivals'} asChild>
+                <Button  />
+              </Link>
+              <Text>You are logged in</Text>
+              <Button onPress={signOut} >Logout</Button>
+            </>
+          )}
+
+            
+            
+        {/* <Apps/> */}
       </ScrollView>
       </Theme>
       
