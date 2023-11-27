@@ -22,7 +22,7 @@ export default function Page() {
     <>
     <TamaguiProvider config={config}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-      <Theme >
+      <Theme name="dark">
         <ScrollView>
           <Text
             color="$white"

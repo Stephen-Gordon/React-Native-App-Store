@@ -37,7 +37,7 @@ export default function RegisterForm() {
     return (
         <>
         
-            <H4>Register</H4>
+            
 
             <YStack space="$3">
                 <YGroup >
@@ -71,7 +71,10 @@ export default function RegisterForm() {
                     
                     
                 </YGroup>
-                <Button onPress={handleSubmit}>Go</Button>
+                <Button bc={"$purple10"} onPress={handleSubmit} size="$6" theme="active">
+                    Create a new account
+                </Button>
+                
 
                 
 

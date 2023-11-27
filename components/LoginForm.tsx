@@ -54,7 +54,8 @@ export default function LoginForm() {
                             size="$6" 
                             onChange={handleChange}
                             placeholder="email"
-                            value={form?.email}
+                            //value={form?.email}
+                            value='stephen@gmail.com'
                             id="email"
                         />
                     </YGroup.Item>
@@ -63,7 +64,7 @@ export default function LoginForm() {
                             size="$6" 
                             onChange={handleChange}
                             placeholder="full name"
-                            value={form?.full_name}
+                            //value={form?.full_name}
                             id="full_name"
                         />
                     </YGroup.Item>
@@ -72,7 +73,7 @@ export default function LoginForm() {
                         size="$6" 
                         onChange={handleChange}
                         placeholder="password"
-                        value={form?.password}
+                        //value={form?.password}
                         id="password"
                     />
                     </YGroup.Item>
