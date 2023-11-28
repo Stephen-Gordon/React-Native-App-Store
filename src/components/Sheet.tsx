@@ -56,9 +56,9 @@ export const SheetDemo = () => {
         >
           <AnimatePresence>
 
-            { showRegisterForm ? (
+            {showLoginForm ? (
               <>
-                <YStack 
+                <YStack
                   animation="medium"
                   enterStyle={{
                     opacity: 0,
@@ -70,19 +70,19 @@ export const SheetDemo = () => {
                     y: -10,
                     scale: 0.9,
                   }}
-                  key="register">
+                  key="login"
+                >
                   <XStack space="$3">
-                    <Button width={'$10'} mb={'$5'} onPress={() => {setShowRegisterForm(false)}}>Back</Button>
-                    <H3 textAlign='right'>Register</H3>
+                    <Button width={'$10'} mb={'$5'} onPress={() => {setShowLoginForm(false)}}>Back</Button>
+                    <H3 textAlign='right'>Login</H3>
                   </XStack>
-                  <RegisterForm/>
+                  <LoginForm/>
                 </YStack>
               </>
-            ) : (
+            ) : showRegisterForm ? (
               <>
-              <YStack space="$5"
-                key="home-login"
-                animation="medium"
+                <YStack
+                  animation="medium"
                   enterStyle={{
                     opacity: 0,
                     y: 10,
@@ -93,16 +93,41 @@ export const SheetDemo = () => {
                     y: -10,
                     scale: 0.9,
                   }}
-              >
-                <H3>Welcome to the</H3>
-                <H1 color={'$purple10'}>App Store</H1>
-                <Button bc={'$purple10'} onPress={() => {setShowRegisterForm(true)}} size="$6" theme="active">
-                  Create a new account
-                </Button>
-                <Button borderColor={'$purple10'} onPress={() => {setShowLoginForm(true)}} size="$6" variant="outlined">
-                  Sign in
-                </Button>
-              </YStack>
+                  key="register"
+                >
+                  <XStack space="$3">
+                    <Button width={'$10'} mb={'$5'} onPress={() => {setShowRegisterForm(false)}}>Back</Button>
+                    <H3 textAlign='right'>Register</H3>
+                  </XStack>
+                  <RegisterForm setOpen={setOpen}/>
+                </YStack>
+              </>
+            ) : (
+              <>
+                <YStack
+                  space="$5"
+                  key="home-login"
+                  animation="medium"
+                  enterStyle={{
+                    opacity: 0,
+                    y: 10,
+                    scale: 0.9,
+                  }}
+                  exitStyle={{
+                    opacity: 0,
+                    y: -10,
+                    scale: 0.9,
+                  }}
+                >
+                  <H3>Welcome to the</H3>
+                  <H1 color={'$purple10'}>App Store</H1>
+                  <Button bc={'$purple10'} onPress={() => {setShowRegisterForm(true)}} size="$6" theme="active">
+                    Create a new account
+                  </Button>
+                  <Button borderColor={'$purple10'} onPress={() => {setShowLoginForm(true)}} size="$6" variant="outlined">
+                    Sign in
+                  </Button>
+                </YStack>
               </>
             )}
         

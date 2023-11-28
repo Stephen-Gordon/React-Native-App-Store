@@ -4,13 +4,19 @@ import { H4, Input, YGroup, Button, YStack,   } from 'tamagui'
 import { useState } from "react";
 import axios from "axios";
 
-interface RegisterForm {
+import { useSession } from '../contexts/AuthContext';
+
+
+interface LoginForm {
     email?: string;
     password?: string;
     full_name?: string;
 }
-export default function RegisterForm() {
-    const [form, setForm] = useState<RegisterForm>();
+export default function LoginForm() {
+
+    const { signIn } = useSession();
+
+    const [form, setForm] = useState<LoginForm>();
     const [error, setError] = useState("");
  
     const handleChange = (e: any) => {
@@ -24,21 +30,23 @@ export default function RegisterForm() {
     const handleSubmit = () => {
         console.log(form);
         axios
-            .post("https://festivals-api.vercel.app/api/users/register", form)
+            .post("https://festivals-api.vercel.app/api/users/login", form)
             .then((response: any) => {
                 console.log(response.data);
-                
+                signIn(response.data.token);
             })
             .catch((err) => {
                 console.error(err);
                 setError(err);
             });
+
     };
     return (
         <>
         
-            
+            <H4>Login</H4>
 
+           
             <YStack space="$3">
                 <YGroup >
                     <YGroup.Item>
@@ -54,7 +62,7 @@ export default function RegisterForm() {
                         <Input
                             size="$6" 
                             onChange={handleChange}
-                            placeholder="full_name"
+                            placeholder="full name"
                             value={form?.full_name}
                             id="full_name"
                         />
@@ -71,10 +79,7 @@ export default function RegisterForm() {
                     
                     
                 </YGroup>
-                <Button bc={"$purple10"} onPress={handleSubmit} size="$6" theme="active">
-                    Create a new account
-                </Button>
-                
+                <Button onPress={handleSubmit} >Go</Button>
 
                 
 

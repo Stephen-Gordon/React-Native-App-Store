@@ -11,7 +11,7 @@ interface App {
 const Apps = () => {
     const [apps, setApps] = useState([]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         const getApps = async () => {
         try {
           console.log("sending")
@@ -26,7 +26,18 @@ const Apps = () => {
 
         getApps();
         
-    }, [])
+    }, []) */
+
+    useEffect(() => {
+      axios.get('https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps')
+        .then(response => {
+          console.log(response.data)
+          setApps(response.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
   return (
     <>
     <YStack
