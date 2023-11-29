@@ -3,14 +3,14 @@
 import { Sheet, SheetProps, useSheet } from '@tamagui/sheet'
 import { StatusBar } from 'expo-status-bar'
 import { useState, useEffect } from 'react'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { Button, H1, H3, Input, Paragraph, XStack, YStack, Separator, AnimatePresence, Text } from 'tamagui'
-import LoginForm from './LoginForm'
-import RegisterForm from './RegisterForm'
+import LoginForm from '../components/LoginForm'
+import RegisterForm from '../components/RegisterForm'
 import { useSession } from '../contexts/AuthContext'
-import SwipeableTabs from "react-native-swipe-tabs"
 
-export const SheetDemo = () => {
+
+export default function Modal () {
 
   const [position, setPosition] = useState(0)
 
@@ -29,36 +29,11 @@ export const SheetDemo = () => {
     }
   }, [])
   
-
+  const isPresented = router.canGoBack();
   return (
 
     <>
 
-      <Sheet
-        forceRemoveScrollEnabled={open}
-        modal={modal}
-        open={open}
-        onOpenChange={setOpen}
-        dismissOnSnapToBottom
-        position={position}
-        snapPoints={[90]}
-        onPositionChange={setPosition}
-        zIndex={100_000}
-        animation="medium"
-        
-      >
-
-        <Sheet.Overlay
-          animation="lazy"
-          enterStyle={{ opacity: 0 }}
-          exitStyle={{ opacity: 0 }}
-        />
-
-        <Sheet.Handle />
-        <Sheet.Frame padding="$4" space="$5"
-        
-        
-        >
           <AnimatePresence>
 
             {showLoginForm ? (
@@ -124,8 +99,10 @@ export const SheetDemo = () => {
                     scale: 0.9,
                   }}
                 >
-                  <H3>Welcome to the</H3>
-                  <H1 color={'$purple10'}>App Store</H1>
+                  <YStack alignItems='center'>
+                    <H3>Welcome to the</H3>
+                    <H1 color={'$purple10'}>App Store</H1>
+                  </YStack>
                   <Button bc={'$purple10'} onPress={() => {setShowRegisterForm(true)}} size="$6" theme="active">
                     Create a new account
                   </Button>
@@ -135,19 +112,7 @@ export const SheetDemo = () => {
                 </YStack>
               </>
             )}
-        
-            
-            
-         
           </AnimatePresence>
-           
-        
-        
-
-        </Sheet.Frame>
-
-      </Sheet>
-
     </>
 
   )

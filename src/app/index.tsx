@@ -9,17 +9,27 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Link } from 'expo-router';
 //components
 import Apps from "../components/Apps"
-
-import { SheetDemo } from '../components/Sheet';
+import { useEffect } from 'react'
+import { useRouter } from 'expo-router';
 import { useSession } from '../contexts/AuthContext';
+import { Pressable } from 'react-native';
 
 export default function Page() {
 
     const { session, signOut, getUser } = useSession();
-	
+	const router = useRouter()
 	const user = getUser();
 	console.log(user)
 
+	useEffect(() => {
+		if(!session){
+
+			// have to use set timeout becuase the app has to be rendered first 
+			setTimeout(() => {
+				router.push('/modal')
+			}, 300)
+		}
+	}, [])
 	
 
   return (
@@ -37,9 +47,10 @@ export default function Page() {
 							>
 								App Store
 							</Text>
+							<Link href="/modal">Present modal</Link>
 
 							{!session ? (
-								<SheetDemo />
+								<></>
 							) : (
 								<>
 									
