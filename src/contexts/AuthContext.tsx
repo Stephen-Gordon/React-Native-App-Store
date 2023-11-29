@@ -41,7 +41,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
 				},
 				getUser: () => {
           console.log("user should be a string here ", user)
-				  const parsedUser =  JSON.parse(user) as any
+				  const parsedUser =  JSON.parse(user)
           console.log(parsedUser)
 					return parsedUser; 
 				}, 
