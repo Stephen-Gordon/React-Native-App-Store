@@ -12,7 +12,7 @@ interface LoginForm {
     password?: string;
     full_name?: string;
 }
-export default function LoginForm() {
+export default function LoginForm({setOpen}: any) {
 
     const { signIn } = useSession();
 
@@ -20,20 +20,23 @@ export default function LoginForm() {
     const [error, setError] = useState("");
  
     const handleChange = (e: any) => {
-        console.log(e.target.value);
- 
         setForm((prevState) => ({
             ...prevState,
             [e.target.id]: e.target.value,
         }));
     };
     const handleSubmit = () => {
-        console.log(form);
+        
         axios
-            .post("https://festivals-api.vercel.app/api/users/login", form)
+            .post("https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/login", form)
             .then((response: any) => {
-                console.log(response.data);
-                signIn(response.data.token);
+                
+                console.log("response data", response.data);
+                let user = response.data.data.user;
+                let userString = JSON.stringify(user);
+                signIn(response.data.data.token, userString);
+                console.log("user string in login, ", userString);
+                setOpen(false);
             })
             .catch((err) => {
                 console.error(err);

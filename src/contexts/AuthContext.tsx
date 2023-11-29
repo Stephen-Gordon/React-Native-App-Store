@@ -1,11 +1,13 @@
 import React from 'react';
 import { useStorageState } from '../hooks/useStorageState';
-
+import { User } from '../types/types';
 interface MyAuthContext {
-    signIn: (token:string) => void;
+    signIn: (token:string, user: string | null) => void;
     signOut: () => void;
     session?: string | null;
     isLoading?: boolean;
+    getUser?: () => any;
+    
 }
 
 const AuthContext = React.createContext<MyAuthContext | null>(null);
@@ -24,20 +26,30 @@ export function useSession() {
 
 export function SessionProvider(props: React.PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
+  const [[userLoading, user], setUser] = useStorageState('user');
+
 
   return (
-    <AuthContext.Provider
-      value={{
-        signIn: (token) => {
-          setSession(token);
-        },
-        signOut: () => {
-          setSession(null);
-        },
-        session,
-        isLoading,
-      }}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+		<AuthContext.Provider
+			value={{
+				signIn: (token, user) => {
+					setSession(token);
+					setUser(user);
+				},
+				signOut: () => {
+					setSession(null);
+				},
+				getUser: () => {
+          console.log("user should be a string here ", user)
+				  const parsedUser =  JSON.parse(user) as any
+          console.log(parsedUser)
+					return parsedUser; 
+				}, 
+				session,
+				isLoading,
+			}}
+		>
+			{props.children}
+		</AuthContext.Provider>
+	);
 }

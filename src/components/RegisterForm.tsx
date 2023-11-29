@@ -33,7 +33,14 @@ export default function RegisterForm({setOpen}: any) {
                 if(response.status === 200 || response.status === 201){
                     axios.post("https://festivals-api.vercel.app/api/users/login", form)
                     .then((response: any) => {
-                        signIn(response.data.token);
+                        signIn(
+                            response.data.token,
+                            JSON.stringify({
+                                _id: response.data._id,
+                                email: response.data.email,
+                                full_name: response.data.full_name,
+                            })
+                        );
                         setOpen(false);
                     })
                 }

@@ -2,13 +2,14 @@
 
 import { Sheet, SheetProps, useSheet } from '@tamagui/sheet'
 import { StatusBar } from 'expo-status-bar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'expo-router'
 import { Button, H1, H3, Input, Paragraph, XStack, YStack, Separator, AnimatePresence, Text } from 'tamagui'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import { useSession } from '../contexts/AuthContext'
 import SwipeableTabs from "react-native-swipe-tabs"
+
 export const SheetDemo = () => {
 
   const [position, setPosition] = useState(0)
@@ -22,7 +23,11 @@ export const SheetDemo = () => {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
 
-
+  useEffect(() => {
+    if(session){
+      setOpen(false)
+    }
+  }, [])
   
 
   return (
@@ -76,7 +81,7 @@ export const SheetDemo = () => {
                     <Button width={'$10'} mb={'$5'} onPress={() => {setShowLoginForm(false)}}>Back</Button>
                     <H3 textAlign='right'>Login</H3>
                   </XStack>
-                  <LoginForm/>
+                  <LoginForm setOpen={setOpen}/>
                 </YStack>
               </>
             ) : showRegisterForm ? (

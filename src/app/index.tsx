@@ -15,8 +15,12 @@ import { useSession } from '../contexts/AuthContext';
 
 export default function Page() {
 
-    const { session, signOut } = useSession();
+    const { session, signOut, getUser } = useSession();
+	
+	const user = getUser();
+	console.log(user)
 
+	
 
   return (
 		<>
@@ -24,25 +28,25 @@ export default function Page() {
 				<GestureHandlerRootView style={{ flex: 1 }}>
 					<Theme name="dark">
 						<ScrollView bg="$background">
-								<Text
-									color="$white"
-									fontSize={20}
-									hoverStyle={{
-										color: "$colorHover",
-									}}
-								>
-									App Store
-								</Text>
-								{session}
+							<Text
+								color="$white"
+								fontSize={20}
+								hoverStyle={{
+									color: "$colorHover",
+								}}
+							>
+								App Store
+							</Text>
 
-								{!session ? (
-									<SheetDemo />
-								) : (
-									<>
-										<Apps />
-									</>
-								)}
-							
+							{!session ? (
+								<SheetDemo />
+							) : (
+								<>
+									
+									{user.full_name}
+									<Apps />
+								</>
+							)}
 						</ScrollView>
 					</Theme>
 				</GestureHandlerRootView>
