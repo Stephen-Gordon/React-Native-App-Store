@@ -7,6 +7,7 @@ import { AppInterface } from "../types";
 import { Text, View, Card, H2, Paragraph, Image, CardProps } from "tamagui";
 import { BlurView } from 'expo-blur';
 import { StyleSheet } from "react-native";
+import { sharedElementTransition } from "../utils/SharedElementTransition";
 export default function Modal() {
   const { id } = useLocalSearchParams();
   const [app, setApp] = useState<AppInterface | null>(null);
@@ -29,9 +30,11 @@ export default function Modal() {
   return (
     
             <BlurView intensity={40}>
+             
               <Animated.View style={styles.image} >
                   <Animated.Image
-                    sharedTransitionTag="image"
+                    sharedTransitionTag={`${id}`}
+                    sharedTransitionStyle={sharedElementTransition}
                     style={{alignSelf: 'center'}}
                     resizeMode="contain"
                     source={{

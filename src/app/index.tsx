@@ -23,7 +23,7 @@ type ItemData = {
   title: string;
 };
 
-
+import { sharedElementTransition } from "../utils/SharedElementTransition";
 export default function Page() {
   const [renderApps, setRenderApps] = useState(false);
   const [apps, setApps] = useState([]);
@@ -78,8 +78,10 @@ export default function Page() {
      <Pressable onPress={() => {
             router.push({ pathname: `/id`, params: { id: _id } });
             }}>
+
     <Animated.Image
-       
+        sharedTransitionTag={`${_id}`}
+        sharedTransitionStyle={sharedElementTransition}
         style={{alignSelf: 'center'}}
         resizeMode="contain"
         source={{
