@@ -6,7 +6,7 @@ import { FlatList, SafeAreaView, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 
 //Tamagui
-import { Card, H2, Paragraph, Text, View, XStack } from "tamagui";
+import { Button, Card, H2, H3, Paragraph, Text, View, XStack } from "tamagui";
 
 //Animated
 import Animated from "react-native-reanimated";
@@ -48,7 +48,7 @@ export default function ReviewsPreview({ reviews } :ReviewInterface) {
 		<Animated.View sharedTransitionTag={`${item._id}`}>
 			<Pressable
 				onPress={() => {
-					router.push({ pathname: `/reScrolls/id`, params: { id: item._id } });
+					router.push({ pathname: `/reviews/id`, params: { id: item._id } });
 				}}
 			>
 				<Card elevate bordered m="$2" space style={{}}>
@@ -101,6 +101,11 @@ export default function ReviewsPreview({ reviews } :ReviewInterface) {
 					sliderWidth={350} // Make sure sliderWidth and itemWidth are defined
 					itemWidth={300}
 				/>
+				<Pressable bc={"$purple10"} onPress={() => {
+                    router.push({ pathname: `/reviews/create` })
+                }} size="$6" theme="active">
+					<H3 color={"$purple10Dark"}>Create a Review</H3>
+				</Pressable>
 			</SafeAreaView>
 		</>
 	);
