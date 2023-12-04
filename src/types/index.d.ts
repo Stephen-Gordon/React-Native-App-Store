@@ -12,10 +12,19 @@ export interface AppInterface {
     price: string
     ver:   string;
     category: string;
-    reviews: number;
+    reviews: ReviewInterface[];
     users: string[];
     image_path: string;
     averageRating: number;
     __v: number;
 
+}
+
+export interface ReviewInterface {
+	_id: string;
+	user: string;
+	app: string;
+	rating: number;
+	content: string;
+    __v: number;
 }
