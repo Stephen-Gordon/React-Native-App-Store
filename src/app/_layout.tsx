@@ -14,7 +14,7 @@ export default function StackLayout() {
             <Stack
             
               screenOptions={{
-               /*  contentStyle: { backgroundColor: "#151515"   }, */
+                 contentStyle: { backgroundColor: "#151515"   }, 
                 headerStyle: {
                   backgroundColor: "#151515",
                 },
