@@ -14,9 +14,9 @@ import {
   AnimatePresence,
   Text,
 } from "tamagui";
-import LoginForm from "../components/LoginForm";
-import RegisterForm from "../components/RegisterForm";
-import { useSession } from "../contexts/AuthContext";
+import LoginForm from "../../components/LoginForm";
+import RegisterForm from "../../components/RegisterForm";
+import { useSession } from "../../contexts/AuthContext";
 
 export default function Modal() {
   const [position, setPosition] = useState(0);

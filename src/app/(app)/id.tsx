@@ -3,27 +3,31 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
 import Animated from "react-native-reanimated";
-import { AppInterface } from "../types";
+import { AppInterface } from "../../types";
 import {
 	YStack,
 	Text,
-	View,
 	Card,
 	H2,
 	Paragraph,
 	Image,
-	CardProps,
 	XStack,
 	Separator,
+	H4,
+	Button,
   } from "tamagui";
 
 
-import ReviewsPreview from "../components/ReviewsPreview";
-import { sharedElementTransition } from "../utils/SharedElementTransition";
+
+import ReviewsPreview from "../../components/reviews/ReviewsPreview";
+import { sharedElementTransition } from "../../utils/SharedElementTransition";
+import { Pressable } from "react-native";
+import { useRouter, Link } from "expo-router";
 
 export default function Modal() {
   const { id } = useLocalSearchParams();
   const [app, setApp] = useState<AppInterface | null>(null);
+  const router = useRouter();
     useEffect(() => {
         const getApp = async () => {
         try {
@@ -41,7 +45,7 @@ export default function Modal() {
   return (
 		<Animated.ScrollView sharedTransitionTag={`${id}`}>
 			<Card>
-				<Animated.Image
+				<Image
 					resizeMode="contain"
 					alignSelf="center"
 					source={{
@@ -58,7 +62,20 @@ export default function Modal() {
 					<YStack>
 						<H2>{app?.name}</H2>
 						<Separator marginVertical={15} />
-						<H2>Reviews</H2>
+						<XStack justifyContent="space-between" alignItems="center">
+							<H2>Reviews</H2>
+							<Pressable
+								onPress={() => {
+									router.push({
+										pathname: `/review`,
+										params: { id: id },
+									});
+								}}
+							>
+								<H4 color="$purple10Dark">See all</H4>
+							</Pressable>
+							
+						</XStack>
 						<ReviewsPreview reviews={app?.reviews} />
 						<Separator marginVertical={15} />
 						<Paragraph>{app?.description}</Paragraph>

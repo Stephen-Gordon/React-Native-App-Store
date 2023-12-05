@@ -11,7 +11,7 @@ export interface AppInterface {
     size_bytes: number;
     price: string
     ver:   string;
-    category: string;
+    genre: string;
     reviews: ReviewInterface[];
     users: string[];
     image_path: string;

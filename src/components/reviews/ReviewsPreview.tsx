@@ -61,13 +61,13 @@ export default function ReviewsPreview({ reviews } :ReviewInterface) {
 		</Animated.View>
 	);
 
-    const CaraItem = ({item, index}: any) => {
+    const CaroItem = ({item, index}: any) => {
         return (
 					<Animated.View sharedTransitionTag={`${item._id}`}>
 						<Pressable
 							onPress={() => {
 								router.push({
-									pathname: `/reScrolls/id`,
+									pathname: `/reviews/id`,
 									params: { id: item._id },
 								});
 							}}
@@ -97,7 +97,7 @@ export default function ReviewsPreview({ reviews } :ReviewInterface) {
 			<SafeAreaView style={{ flex: 1 }}>
 				<Carousel
 					data={reviews}
-					renderItem={CaraItem}
+					renderItem={CaroItem}
 					sliderWidth={350} // Make sure sliderWidth and itemWidth are defined
 					itemWidth={300}
 				/>

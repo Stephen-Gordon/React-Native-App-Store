@@ -7,56 +7,37 @@ import { AntDesign } from '@expo/vector-icons';
 export default function StackLayout() {
   const router = useRouter();
   return (
-    <>
-      <SessionProvider>
-        <TamaguiProvider config={config}>
-          <Theme name="dark">
-            <Stack
-            
-              screenOptions={{
-                 contentStyle: { backgroundColor: "#151515"   }, 
-                headerStyle: {
-                  backgroundColor: "#151515",
-                },
-                headerTintColor: "#fff",
-                headerTitleStyle: {
-                  fontWeight: "bold",
-                },
-              }}
-            >
-              <Stack.Screen name="index" options={{ headerTitle: "Home" }} />
-              <Stack.Screen
-                name="login"
-                options={{
-                  // Set the presentation mode to modal for our modal route.
-                  headerTitle: "Login or Sign Up",
-                  presentation: "modal",
-                }}
-              /> 
-              <Stack.Screen
-                name="id"
-                
-                options={{
-                  // Set the presentation mode to modal for our modal route.
-                  headerTitle: "2",
-                  presentation: "transparentModal",
-                  animation: 'fade',
-                  headerLeft: () => (
-                     <AntDesign 
-                     onPress={() => {
-                      router.back()
-                    }} 
-                    on
-                    name="closecircleo" size={24} color="grey" />
-                  ),
-                }}
-              /> 
-               {/* modal" | "transparentModal" | "containedModal" | "containedTransparentModal" | "fullScreenModal" | "formSheet" | "card"  */}
+		<>
+			<SessionProvider>
+				<TamaguiProvider config={config}>
+					<Theme name="dark">
+						<Stack
+							screenOptions={{
+								contentStyle: { backgroundColor: "#151515" },
+								headerStyle: {
+									backgroundColor: "#151515",
+								},
+								headerTintColor: "#fff",
+								headerTitleStyle: {
+									fontWeight: "bold",
+								},
+							}}
+						>
+							<Stack.Screen name="(app)" options={{ headerTitle: "Home" }} />
 
-            </Stack>
-          </Theme>
-        </TamaguiProvider>
-      </SessionProvider>
-    </>
-  );
+							<Stack.Screen
+								name="(reviews)"
+								options={{ headerTitle: "reviews", title: "reviews" }}
+							/>
+			
+
+							
+
+							{/* modal" | "transparentModal" | "containedModal" | "containedTransparentModal" | "fullScreenModal" | "formSheet" | "card"  */}
+						</Stack>
+					</Theme>
+				</TamaguiProvider>
+			</SessionProvider>
+		</>
+	);
 }

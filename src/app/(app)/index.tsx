@@ -1,16 +1,16 @@
 // tamagui config
 //import '@tamagui/core/reset.css'
 import { TamaguiProvider, ScrollView, YStack } from "tamagui";
-import config from "../../tamagui.config";
+import config from "../../../tamagui.config";
 // tamagui components
 import { Button, Text, Theme } from "tamagui";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Link } from "expo-router";
 //components
-import Apps from "../components/Apps";
+import Apps from "../../components/Apps";
 import { useEffect, useCallback } from "react";
 import { useRouter } from "expo-router";
-import { useSession } from "../contexts/AuthContext";
+import { useSession } from "../../contexts/AuthContext";
 import { useState } from "react";
 import { StyleSheet, SafeAreaView,View,FlatList, } from "react-native";
 import { useFonts } from "expo-font";
@@ -21,7 +21,7 @@ import { Card, H2, Paragraph, XStack } from "tamagui";
 type ItemProps = {title: string, _id: string};
 
 
-import { sharedElementTransition } from "../utils/SharedElementTransition";
+import { sharedElementTransition } from "../../utils/SharedElementTransition";
 export default function Page() {
   const [renderApps, setRenderApps] = useState(false);
   const [apps, setApps] = useState([]);
