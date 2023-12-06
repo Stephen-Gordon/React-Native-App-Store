@@ -55,9 +55,8 @@ export default function Modal() {
 		if(!session) {
 			console.log("login");
 			router.push("/login");
-		}
-		else {
-			console.log(session);
+		} else {
+			
 			router.push({
 				pathname: `/reviews`,
 				params: { id: id },
@@ -67,7 +66,7 @@ export default function Modal() {
 	}
 
   return (
-		<Animated.ScrollView sharedTransitionTag={`${id}`}>
+		<Animated.ScrollView sharedTransitionTag={`${id}`} style={{height: '100%', backgroundColor: '#151515'}}>
 			<Card>
 				{/* <Image
 					source={{

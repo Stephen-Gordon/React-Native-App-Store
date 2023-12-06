@@ -1,6 +1,6 @@
 // tamagui config
 //import '@tamagui/core/reset.css'
-import { TamaguiProvider, ScrollView, YStack } from "tamagui";
+import { TamaguiProvider, ScrollView, YStack, View } from "tamagui";
 import config from "../../../tamagui.config";
 // tamagui components
 import { Button, Text, Theme } from "tamagui";
@@ -12,7 +12,7 @@ import { useEffect, useCallback } from "react";
 import { useRouter } from "expo-router";
 import { useSession } from "../../contexts/AuthContext";
 import { useState } from "react";
-import { StyleSheet, SafeAreaView,View,FlatList, } from "react-native";
+import { StyleSheet, SafeAreaView,FlatList, } from "react-native";
 import { useFonts } from "expo-font";
 import axios from "axios";
 import Animated from "react-native-reanimated";
@@ -44,6 +44,8 @@ export default function Page() {
           router.push("/login");
           setRenderApps(true);
         }, 300);
+      } else {
+        setRenderApps(true);
       }
 
       const getApps = async () => {
@@ -74,7 +76,7 @@ export default function Page() {
 
   
   const Item = ({ item }: ItemProps) => (
-		<Animated.View sharedTransitionTag={`${item._id}`}>
+		<Animated.View sharedTransitionTag={`${item._id}`} >
 			<Pressable
 				onPress={() => {
 					router.push({ pathname: `/id`, params: { id: item._id } });
@@ -111,8 +113,9 @@ export default function Page() {
     <>
       <TamaguiProvider config={config}>
        
-          <Theme name="dark">
-            
+          <Theme name="dark"  >
+            <ScrollView style={{height: '100%', backgroundColor: '#151515'}}>
+              
               <Text
                 fontSize={20}
                 hoverStyle={{
@@ -126,14 +129,15 @@ export default function Page() {
 
               {renderApps && (
                 <>
-                  <SafeAreaView style={styles.container}>
+               
                     <FlatList
                       data={apps}
                       renderItem={Item}
                     />
-                  </SafeAreaView>
+                 
                 </>
               )}
+            </ScrollView>
       
           </Theme>
     

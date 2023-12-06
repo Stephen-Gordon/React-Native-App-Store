@@ -11,7 +11,7 @@ export default function StackLayout() {
 			<SessionProvider>
 				<Stack
 					screenOptions={{
-						contentStyle: { backgroundColor: "#151515" },
+						/* contentStyle: { backgroundColor: "#151515" }, */
 						headerStyle: {
 							backgroundColor: "#151515",
 						},
@@ -32,6 +32,7 @@ export default function StackLayout() {
 						}}
 					/>
 					<Stack.Screen
+
 						name="id"
 						options={{
 							// Set the presentation mode to modal for our modal route.
@@ -75,8 +76,8 @@ export default function StackLayout() {
 						name="reviews/create"
 						options={{
 							// Set the presentation mode to modal for our modal route.
-							headerTitle: "Reviews",
-							presentation: "fullScreenModal",
+							headerTitle: "Write Your Review",
+							presentation: "transparentModal",
 							animation: "fade",
 							headerLeft: () => (
 								<AntDesign

@@ -19,6 +19,9 @@ import Carousel from "react-native-snap-carousel";
 
 //Rating
 import { Rating, AirbnbRating } from "react-native-ratings";
+
+// Session
+import { useSession } from "../../contexts/AuthContext";
 interface ReviewInterface {
 	item: {
 		_id: string;
@@ -41,7 +44,8 @@ interface ReviewInterface {
 
 
 export default function ReviewsPreview({ reviews } :ReviewInterface) {
-
+	
+	const { session } = useSession();
     const router = useRouter();
     
 	const Item = ({ item }: ReviewInterface) => (
@@ -102,7 +106,7 @@ export default function ReviewsPreview({ reviews } :ReviewInterface) {
 					itemWidth={300}
 				/>
 				<Pressable bc={"$purple10"} onPress={() => {
-                    router.push({ pathname: `/reviews/create` })
+					session ? router.push({ pathname: `/reviews/create` }) : router.push({ pathname: `/login` })
                 }} size="$6" theme="active">
 					<H3 color={"$purple10Dark"}>Create a Review</H3>
 				</Pressable>
