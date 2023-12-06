@@ -1,4 +1,4 @@
-import TextArea from 'tamagui'
+import {TextArea} from 'tamagui'
 
 export default function CreateReview () {
     return (
