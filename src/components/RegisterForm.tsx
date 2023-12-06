@@ -1,8 +1,11 @@
 import { H4, Input, YGroup, Button, YStack } from "tamagui";
-
+import { TextInput } from "react-native";
 import { useState } from "react";
 import axios from "axios";
 import { useSession } from "../contexts/AuthContext";
+// form
+import { useForm, Controller } from "react-hook-form"
+import { router } from "expo-router";
 
 interface RegisterForm {
   email?: string;
@@ -10,20 +13,27 @@ interface RegisterForm {
   full_name?: string;
 }
 export default function RegisterForm({ setOpen }: any) {
-  const [form, setForm] = useState<RegisterForm>();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      full_name: "",
+    },
+  })
+  
+
   const [error, setError] = useState("");
+  
 
   const { signIn } = useSession();
 
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-
-    setForm((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
-  };
-  const handleSubmit = () => {
+  
+  const onSubmit = (form: RegisterForm) => {
     console.log(form);
     axios
       .post("https://festivals-api.vercel.app/api/users/register", form)
@@ -38,10 +48,17 @@ export default function RegisterForm({ setOpen }: any) {
                 JSON.stringify({
                   _id: response.data._id,
                   email: response.data.email,
-                  full_name: response.data.full_name,
+                /*   full_name: response.data.full_name, */
                 }),
               );
-              setOpen(false);
+              
+            })
+            .then(() => {
+              router.push({ pathname: `/` });
+            })
+            .catch((err) => {
+              console.error(err);
+              setError(err);
             });
         }
       })
@@ -49,42 +66,69 @@ export default function RegisterForm({ setOpen }: any) {
         console.error(err);
         setError(err);
       });
-  };
+  }; 
+
   return (
     <>
-      <YStack space="$3">
-        <YGroup>
-          <YGroup.Item>
-            <Input
-              size="$6"
-              onChange={handleChange}
-              placeholder="email"
-              value={form?.email}
-              id="email"
-            />
-          </YGroup.Item>
-          <YGroup.Item>
-            <Input
-              size="$6"
-              onChange={handleChange}
-              placeholder="full_name"
-              value={form?.full_name}
-              id="full_name"
-            />
-          </YGroup.Item>
-          <YGroup.Item>
-            <Input
-              size="$6"
-              onChange={handleChange}
-              placeholder="password"
-              value={form?.password}
-              id="password"
-            />
-          </YGroup.Item>
-        </YGroup>
+      <YStack space="$3" padding="$2">
+        <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            size="$6"
+            placeholder="Email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="email"
+      />
+
+      <Controller
+        control={control}
+        rules={{
+          maxLength: 100,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+          size="$6"
+            placeholder="Name"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="full_name"
+      />
+        <Controller
+        control={control}
+        rules={{
+          maxLength: 100,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+          size="$6"
+            placeholder="Password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="password"
+      />
+   
+
+
+
+
+
         <Button
           bc={"$purple10"}
-          onPress={handleSubmit}
+          onPress={handleSubmit(onSubmit)} 
           size="$6"
           theme="active"
         >
