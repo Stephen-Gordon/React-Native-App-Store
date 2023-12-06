@@ -25,6 +25,7 @@ import { sharedElementTransition } from "../../utils/SharedElementTransition";
 export default function Page() {
   const [renderApps, setRenderApps] = useState(false);
   const [apps, setApps] = useState([]);
+  const [user, setUser] = useState(null);
 
   const [loaded] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
@@ -33,7 +34,7 @@ export default function Page() {
 
   const { session, signOut, getUser } = useSession();
   const router = useRouter();
-  const user = getUser();
+  
 
   useEffect(() => {
     if (loaded) {
@@ -58,6 +59,7 @@ export default function Page() {
       };
 
       getApps();
+      getUser();
         
 
     }
@@ -120,7 +122,7 @@ export default function Page() {
                 App Store
               </Text>
               <Link href="/modal">Present modal</Link>
-              {session && <>{user.full_name}</>}
+              {session && <>{user?.full_name}</>}
 
               {renderApps && (
                 <>

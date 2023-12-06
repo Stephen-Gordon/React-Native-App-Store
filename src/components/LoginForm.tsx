@@ -8,7 +8,7 @@ import { useSession } from "../contexts/AuthContext";
 interface LoginForm {
   email?: string;
   password?: string;
-  full_name?: string;
+  /* full_name?: string; */
 }
 export default function LoginForm({ setOpen }: any) {
   const { signIn } = useSession();
@@ -54,7 +54,7 @@ export default function LoginForm({ setOpen }: any) {
               id="email"
             />
           </YGroup.Item>
-          <YGroup.Item>
+  {/*         <YGroup.Item>
             <Input
               size="$6"
               onChange={handleChange}
@@ -62,7 +62,7 @@ export default function LoginForm({ setOpen }: any) {
               value={form?.full_name}
               id="full_name"
             />
-          </YGroup.Item>
+          </YGroup.Item> */}
           <YGroup.Item>
             <Input
               size="$6"

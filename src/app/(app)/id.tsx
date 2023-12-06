@@ -24,10 +24,17 @@ import { sharedElementTransition } from "../../utils/SharedElementTransition";
 import { Pressable } from "react-native";
 import { useRouter, Link } from "expo-router";
 
+// Contexts
+import { useSession } from "../../contexts/AuthContext";
+
 export default function Modal() {
+
   const { id } = useLocalSearchParams();
   const [app, setApp] = useState<AppInterface | null>(null);
   const router = useRouter();
+	  const { session } = useSession();
+
+	
     useEffect(() => {
         const getApp = async () => {
         try {
@@ -42,9 +49,32 @@ export default function Modal() {
         getApp();
         
     }, [])   
+
+
+	const handleReviewsPage = () => {
+		if(!session) {
+			console.log("login");
+			router.push("/login");
+		}
+		else {
+			console.log(session);
+			router.push({
+				pathname: `/reviews`,
+				params: { id: id },
+			});
+		}
+		
+	}
+
   return (
 		<Animated.ScrollView sharedTransitionTag={`${id}`}>
 			<Card>
+				{/* <Image
+					source={{
+						uri: `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`,
+					}}
+				/> */}
+
 				<Image
 					resizeMode="contain"
 					alignSelf="center"
@@ -66,15 +96,11 @@ export default function Modal() {
 							<H2>Reviews</H2>
 							<Pressable
 								onPress={() => {
-									router.push({
-										pathname: `/review`,
-										params: { id: id },
-									});
+									handleReviewsPage();
 								}}
 							>
 								<H4 color="$purple10Dark">See all</H4>
 							</Pressable>
-							
 						</XStack>
 						<ReviewsPreview reviews={app?.reviews} />
 						<Separator marginVertical={15} />
