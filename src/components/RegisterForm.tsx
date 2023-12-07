@@ -33,40 +33,32 @@ export default function RegisterForm({ setOpen }: any) {
   const { signIn } = useSession();
 
   
-  const onSubmit = (form: RegisterForm) => {
-    console.log(form);
-    axios
-      .post("https://festivals-api.vercel.app/api/users/register", form)
-      .then((response: any) => {
+  const onSubmit = async (form: RegisterForm) => {
+    try {
+      // Register user
+      const response = await axios.post("https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/register", form);
       
-        if (response.status === 200 || response.status === 201) {
-          axios
-            .post("https://festivals-api.vercel.app/api/users/login", form)
-            .then((response: any) => {
-              signIn(
-                response.data.token,
-                JSON.stringify({
-                  _id: response.data._id,
-                  email: response.data.email,
-                /*   full_name: response.data.full_name, */
-                }),
-              );
-              
-            })
-            .then(() => {
-              /* router.push({ pathname: `/` }); */
-            })
-            .catch((err) => {
-              console.error(err);
-              setError(err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(err);
-      });
-  }; 
+      console.log(response);
+      const user = {
+        _id: response.data.data.user._id,
+        email: response.data.data.user.email,
+        full_name: response.data.data.user.full_name,
+      };
+
+      // Convert user information to JSON
+      const jsonUser = JSON.stringify(user);
+
+      // Sign in the user
+      signIn(response.data.data.token, jsonUser);
+
+      
+      router.push({ pathname: `/` }); 
+    } catch (error) {
+   
+      console.error(error);
+    
+    }
+  };
 
   return (
     <>

@@ -25,7 +25,7 @@ import { sharedElementTransition } from "../../utils/SharedElementTransition";
 export default function Page() {
   const [renderApps, setRenderApps] = useState(false);
   const [apps, setApps] = useState([]);
-  const [user, setUser] = useState(null);
+  
 
   const [loaded] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
@@ -34,6 +34,7 @@ export default function Page() {
 
   const { session, signOut, getUser } = useSession();
   const router = useRouter();
+  const user = getUser();
   
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export default function Page() {
       <TamaguiProvider config={config}>
        
           <Theme name="dark"  >
-            <ScrollView style={{height: '100%', backgroundColor: '#151515'}}>
+           
               
               <Text
                 fontSize={20}
@@ -123,12 +124,13 @@ export default function Page() {
                 }}
               >
                 App Store
-                
-                { session}
+         
               </Text>
-              
+            
               <Button onPress={signOut}>Sign Out</Button>
-              {session && <>{user?.full_name}</>}
+              {session && <>
+             <Text> { user?.full_name }</Text>  
+              </>}
 
               {renderApps && (
                 <>
@@ -140,7 +142,7 @@ export default function Page() {
                  
                 </>
               )}
-            </ScrollView>
+           
       
           </Theme>
     

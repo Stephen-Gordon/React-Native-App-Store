@@ -30,9 +30,9 @@ export function SessionProvider(props: React.PropsWithChildren) {
   return (
     <AuthContext.Provider
       value={{
-        signIn: (token, user) => {
-          setSession(token);
-         /*  setUser(user); */
+        signIn: (_token, _user) => {
+          setSession(_token);
+          setUser(_user);
         },
         signOut: () => {
           setSession(null);
