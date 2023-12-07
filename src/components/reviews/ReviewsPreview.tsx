@@ -12,7 +12,7 @@ import { Button, Card, H2, H3, Paragraph, Text, View, XStack } from "tamagui";
 import Animated from "react-native-reanimated";
 
 //Router
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 // carousel
 import Carousel from "react-native-snap-carousel";
@@ -89,6 +89,13 @@ export default function ReviewsPreview({ reviews, appId } :ReviewInterface) {
 					sliderWidth={350} // Make sure sliderWidth and itemWidth are defined
 					itemWidth={300}
 				/>
+				<Link
+					href={{
+					pathname: "/reviews/create",
+					params: { appId: appId },
+					}}
+					asChild
+					><Button>review</Button></Link>
 				<Pressable bc={"$purple10"} onPress={() => {
 					session ? router.push({ pathname: `/reviews/create`, params: {appId: appId} }) : router.push({ pathname: `/login` })
                 }} size="$6" theme="active">

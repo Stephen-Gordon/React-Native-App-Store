@@ -53,7 +53,6 @@ export default function Modal() {
 
 	const handleReviewsPage = () => {
 		if(!session) {
-			console.log("login");
 			router.push("/login");
 		} else {
 			
