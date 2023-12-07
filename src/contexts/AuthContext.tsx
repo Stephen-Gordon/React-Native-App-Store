@@ -32,7 +32,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
       value={{
         signIn: (token, user) => {
           setSession(token);
-          setUser(user);
+         /*  setUser(user); */
         },
         signOut: () => {
           setSession(null);

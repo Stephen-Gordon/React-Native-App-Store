@@ -18,11 +18,12 @@ import { useRouter } from "expo-router";
 import Carousel from "react-native-snap-carousel";
 
 //Rating
-import { Rating, AirbnbRating } from "react-native-ratings";
+import {  AirbnbRating } from "react-native-ratings";
 
 // Session
 import { useSession } from "../../contexts/AuthContext";
 interface ReviewInterface {
+	appId: string;
 	item: {
 		_id: string;
 		user: string;
@@ -43,31 +44,14 @@ interface ReviewInterface {
 
 
 
-export default function ReviewsPreview({ reviews } :ReviewInterface) {
+export default function ReviewsPreview({ reviews, appId } :ReviewInterface) {
 	
 	const { session } = useSession();
     const router = useRouter();
-    
-	const Item = ({ item }: ReviewInterface) => (
-		<Animated.View sharedTransitionTag={`${item._id}`}>
-			<Pressable
-				onPress={() => {
-					router.push({ pathname: `/reviews/id`, params: { id: item._id } });
-				}}
-			>
-				<Card elevate bordered m="$2" space style={{}}>
-					<Card.Header padded>
-						<H2>{item.rating}</H2>
-						<Paragraph theme="alt2">{item.content}</Paragraph>
-					</Card.Header>
-				</Card>
-			</Pressable>
-		</Animated.View>
-	);
 
     const CaroItem = ({item, index}: any) => {
         return (
-					<Animated.View sharedTransitionTag={`${item._id}`}>
+					<Animated.View>
 						<Pressable
 							onPress={() => {
 								router.push({
@@ -106,7 +90,7 @@ export default function ReviewsPreview({ reviews } :ReviewInterface) {
 					itemWidth={300}
 				/>
 				<Pressable bc={"$purple10"} onPress={() => {
-					session ? router.push({ pathname: `/reviews/create` }) : router.push({ pathname: `/login` })
+					session ? router.push({ pathname: `/reviews/create`, params: {appId: appId} }) : router.push({ pathname: `/login` })
                 }} size="$6" theme="active">
 					<H3 color={"$purple10Dark"}>Create a Review</H3>
 				</Pressable>

@@ -8,7 +8,6 @@ import { useSession } from "../contexts/AuthContext";
 interface LoginForm {
   email?: string;
   password?: string;
-  /* full_name?: string; */
 }
 export default function LoginForm({ setOpen }: any) {
   const { signIn } = useSession();

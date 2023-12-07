@@ -123,8 +123,11 @@ export default function Page() {
                 }}
               >
                 App Store
+                
+                { session}
               </Text>
-              <Link href="/modal">Present modal</Link>
+              
+              <Button onPress={signOut}>Sign Out</Button>
               {session && <>{user?.full_name}</>}
 
               {renderApps && (

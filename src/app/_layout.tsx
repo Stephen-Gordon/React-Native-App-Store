@@ -23,11 +23,11 @@ export default function StackLayout() {
 								},
 							}}
 						>
-							<Stack.Screen name="(app)" options={{ headerTitle: "Home" }} />
+							<Stack.Screen name="(app)" options={{ headerShown:false, headerTitle: "Home" }} />
 
 							<Stack.Screen
 								name="(reviews)"
-								options={{ headerTitle: "reviews", title: "reviews" }}
+								options={{ headerTitle: "reviews", title: "reviews", headerShown:false,}}
 							/>
 			
 

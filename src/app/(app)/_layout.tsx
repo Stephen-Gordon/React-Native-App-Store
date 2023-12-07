@@ -11,7 +11,7 @@ export default function StackLayout() {
 			<SessionProvider>
 				<Stack
 					screenOptions={{
-						/* contentStyle: { backgroundColor: "#151515" }, */
+						contentStyle: { backgroundColor: "#151515" }, 
 						headerStyle: {
 							backgroundColor: "#151515",
 						},
@@ -77,8 +77,7 @@ export default function StackLayout() {
 						options={{
 							// Set the presentation mode to modal for our modal route.
 							headerTitle: "Write Your Review",
-							presentation: "transparentModal",
-							animation: "fade",
+							presentation: "modal",
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {

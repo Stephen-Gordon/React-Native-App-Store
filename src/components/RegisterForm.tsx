@@ -54,7 +54,7 @@ export default function RegisterForm({ setOpen }: any) {
               
             })
             .then(() => {
-              router.push({ pathname: `/` });
+              /* router.push({ pathname: `/` }); */
             })
             .catch((err) => {
               console.error(err);

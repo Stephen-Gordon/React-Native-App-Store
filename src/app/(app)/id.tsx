@@ -101,7 +101,7 @@ export default function Modal() {
 								<H4 color="$purple10Dark">See all</H4>
 							</Pressable>
 						</XStack>
-						<ReviewsPreview reviews={app?.reviews} />
+						<ReviewsPreview reviews={app?.reviews} appId={id} />
 						<Separator marginVertical={15} />
 						<Paragraph>{app?.description}</Paragraph>
 					</YStack>
