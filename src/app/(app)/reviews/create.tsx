@@ -44,7 +44,9 @@ export default function Page() {
 		}
 	})
 		.then((response: any) => {
-			router.back()
+
+			let review = response.data;
+			router.push({ pathname: `/id`, params: { id: appId, reviewToAdd: review, message: "reviewTo add message here" } });
 		})
 		.catch((err) => {
 			console.error(err);

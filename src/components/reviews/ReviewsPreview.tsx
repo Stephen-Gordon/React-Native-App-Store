@@ -19,10 +19,12 @@ import Carousel from "react-native-snap-carousel";
 
 //Rating
 import {  AirbnbRating } from "react-native-ratings";
-
+//search params
+import { useLocalSearchParams } from "expo-router";
 // Session
 import { useSession } from "../../contexts/AuthContext";
-interface ReviewInterface {
+interface ReviewPreviewProps {
+	setApp: (app: any) => void;
 	appId: string;
 	item: {
 		_id: string;
@@ -44,10 +46,14 @@ interface ReviewInterface {
 
 
 
-export default function ReviewsPreview({ reviews, appId } :ReviewInterface) {
+export default function ReviewsPreview({ reviews, appId } :ReviewPreviewProps) {
 	
 	const { session } = useSession();
     const router = useRouter();
+	
+	
+	
+
 
     const CaroItem = ({item, index}: any) => {
         return (
