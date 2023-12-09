@@ -90,7 +90,7 @@ export default function ReviewsPreview({ reviews, appId } :ReviewPreviewProps) {
 		<>
 			<SafeAreaView style={{ flex: 1 }}>
 				<Carousel
-					data={reviews}
+					data={reviews?.slice(0, 3)}
 					renderItem={CaroItem}
 					sliderWidth={350} // Make sure sliderWidth and itemWidth are defined
 					itemWidth={300}

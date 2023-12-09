@@ -112,7 +112,7 @@ export default function StackLayout() {
 						}}
 					/>
 					<Stack.Screen
-						name="reviews/index"
+						name="reviews/all"
 						options={{
 							// Set the presentation mode to modal for our modal route.
 							headerTitle: "Reviews",

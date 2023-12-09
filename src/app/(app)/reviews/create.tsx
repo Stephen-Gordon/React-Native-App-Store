@@ -15,6 +15,7 @@ import axios from "axios";
 
 //Rating
 import {  AirbnbRating } from "react-native-ratings";
+import { useEffect, useState } from "react";
 
 
 export default function Page() {
@@ -22,20 +23,16 @@ export default function Page() {
 	const router = useRouter();
 	const { appId } = useLocalSearchParams();
 	const { session, user } = useSession();
-
-
-	const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      	app: appId,
-		content: "",
-		rating: null,
-		
-    },
-  })
+	
+	// form data
+	const { control, handleSubmit, formState: { errors }} = useForm({
+		defaultValues: {
+			app: appId,
+			content: "",
+			rating: null,
+			
+		},
+  	})
 
   const onSubmit = (form: any) => {
 	axios.post("https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/reviews", form, {
@@ -52,6 +49,9 @@ export default function Page() {
 			console.error(err);
 		})
   }
+
+
+
 
   
 	return (

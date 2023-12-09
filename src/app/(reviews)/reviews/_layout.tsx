@@ -18,9 +18,9 @@ export default function StackLayout() {
 					},
 				}}
 			>
-				<Stack.Screen name="index" options={{ headerTitle: "Review Home" }} />
+				{/* <Stack.Screen name="index" options={{ headerTitle: "Review Home" }} />
 
-	
+	 */}
 				
 
 				{/* modal" | "transparentModal" | "containedModal" | "containedTransparentModal" | "fullScreenModal" | "formSheet" | "card"  */}

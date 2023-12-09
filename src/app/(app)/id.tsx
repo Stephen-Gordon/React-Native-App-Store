@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
 import Animated from "react-native-reanimated";
-import { AppInterface } from "../../types";
+import { AppInterface, ReviewInterface } from "../../types";
 import {
 	YStack,
 	Text,
@@ -31,11 +31,11 @@ export default function Modal() {
 
 	const { id, message, reviewToAdd } = useLocalSearchParams();
 	const [app, setApp] = useState<AppInterface | null>(null);
+	const [reviews, setReviews] = useState<ReviewInterface | null>(null);
 	const router = useRouter();
 	const { session } = useSession();
 	
     useEffect(() => {
-		console.log("hello")
         const getApp = async () => {
         try {
             const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps/${id}`);
@@ -45,33 +45,35 @@ export default function Modal() {
             console.error('Error:', error);
         }
         };
+	
 
         getApp();
-        
-    }, [])   
+       
+    }, []) 
 
-	
 	useEffect(() => {
-    if (reviewToAdd) {
-		console.log(reviewToAdd.content)
-		console.log(message)
-      setApp((prevState) => ({
-        ...prevState,
-        reviews: [...prevState.reviews, reviewToAdd],
-      }));
-	  console.log(app?.reviews)
-	  
-    }
-  }, [reviewToAdd, message]);	
+		const getReviews = async () => {
+			try {
+				const response = await axios.get(
+					`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/reviews/${id}`
+				);
+				setReviews(response.data.reverse());
+			} catch (error) {
+				console.error("Error:", error);
+			}
+		}
+		getReviews();
+	}, [reviews, reviewToAdd])
 
 
 	const handleReviewsPage = () => {
+		
 		if(!session) {
 			router.push("/login");
 		} else {
-			
+			console.log("handleReviewsPage");
 			router.push({
-				pathname: `/reviews`,
+				pathname: `/reviews/all`,
 				params: { id: id },
 			});
 		}
@@ -114,7 +116,7 @@ export default function Modal() {
 								<H4 color="$purple10Dark">See all</H4>
 							</Pressable>
 						</XStack>
-						<ReviewsPreview reviews={app?.reviews} setApp={setApp} appId={id} />
+						<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
 						<Separator marginVertical={15} />
 						<Paragraph>{app?.description}</Paragraph>
 					</YStack>

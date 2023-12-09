@@ -9,6 +9,8 @@ export default function StackLayout() {
   return (
 		<>
 			<SessionProvider>
+				
+					
 				<TamaguiProvider config={config}>
 					<Theme name="dark">
 						<Stack
@@ -25,10 +27,10 @@ export default function StackLayout() {
 						>
 							<Stack.Screen name="(app)" options={{ headerShown:false, headerTitle: "Home" }} />
 
-							<Stack.Screen
+						{/* 	<Stack.Screen
 								name="(reviews)"
 								options={{ headerTitle: "reviews", title: "reviews", headerShown:false,}}
-							/>
+							/> */}
 			
 
 							
@@ -37,6 +39,7 @@ export default function StackLayout() {
 						</Stack>
 					</Theme>
 				</TamaguiProvider>
+			
 			</SessionProvider>
 		</>
 	);
