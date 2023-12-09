@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
-import Animated from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut, Layout } from 'react-native-reanimated';
 import { AppInterface } from "../../../types";
 import {
 	YStack,
@@ -13,7 +13,7 @@ import {
 	Image,
 	XStack,
 	Separator,
-    View,
+    
 	H4,
 	Button,
     H1,
@@ -23,7 +23,7 @@ import {
 } from "tamagui";
 
 // react native
-import { Pressable, SafeAreaView, ActionSheetIOS } from "react-native";
+import { Pressable, SafeAreaView, ActionSheetIOS, View } from "react-native";
 import { FlatList } from "react-native";
 
 // rating
@@ -38,6 +38,7 @@ import { ReviewInterface } from "../../../types";
 // delete
 import { handleDelete } from "../../../utils/handleDelete";
 
+
 export default function Modal() {
 
 	const { session, signOut, getUser } = useSession();
@@ -46,7 +47,8 @@ export default function Modal() {
 
 	const { id } = useLocalSearchParams();
 	const [app, setApp] = useState<AppInterface | null>(null);
-	const [reviews, setReviews] = useState<ReviewInterface | null>(null);
+	// fix ts error on filter
+	const [reviews, setReviews] = useState<ReviewInterface | null | any>(null);
 
 	useEffect(() => {
 		const getApp = async () => {
@@ -76,67 +78,96 @@ export default function Modal() {
 	}, []);
 
    
-	const handlePress = () =>
-		ActionSheetIOS.showActionSheetWithOptions(
-		{
-			options: ['Cancel', 'Delete'],
-			destructiveButtonIndex: 1,
-			cancelButtonIndex: 0,
-			userInterfaceStyle: 'dark',
-		},
-		buttonIndex => {
-			if (buttonIndex === 0) {
-			// cancel action
-			} else if (buttonIndex === 1) {
-				handleDelete("123")
-			} 
-		},
-		);
-	
-
-	const Item = ({ item }: ItemProps) => (
+	const handlePress = (_reviewIdToDelete: string, _userId: string) => {
+			if(user.role == 'admin' || user._id == _userId) {
+				ActionSheetIOS.showActionSheetWithOptions(
+			{
+				options: ['Cancel', 'Delete'],
+				destructiveButtonIndex: 1,
+				cancelButtonIndex: 0,
+				userInterfaceStyle: 'dark',
+			},
+			buttonIndex => {
+			
+				if (buttonIndex === 0) {
+				// cancel action
+				} else if (buttonIndex === 1) {
+					handleDelete("reviews", _reviewIdToDelete, session)
+					.then((response) => {
+						setReviews(reviews?.filter((review: ReviewInterface) => review._id !== _reviewIdToDelete))
+					})
+					.catch((error) => {
+						console.log(error);
+					})
+					
+				} 
+				}
 		
-            <Stack px="$3.5" my="$3.5" alignItems="flex-start">
-                <XStack space="$2" alignItems="center">
-                    <Avatar circular size="$3" backgroundColor="$color.gray7Dark" >
-                        
-                    </Avatar>
+			);
+			}
+		
+			
+	}
+		
 
-                    <Text theme="alt1">{item.user.full_name}</Text>
-                       
-                </XStack>
-                <XStack my="$2" >
-                    <AirbnbRating
-                        
-                        count={5}
-                        defaultRating={item.rating}
-                        size={16}
-                        showRating={false}
-                    
-                />
-                </XStack>
-                   
-                <Paragraph >{item.content}</Paragraph>
-                {item.user._id == user._id || item.user.role == 'admin' && (
-                    <Button bc="$red10Dark"  onPress={handleDelete}>Delete</Button>
-                )}
-               
-            </Stack>
-	
-	);
+	const Item = ({ item }: ItemProps) => {
+		
+		return (
+			<Animated.View 
+					key={item._id}
+					entering={FadeIn}
+					exiting={FadeOut}
+					layout={Layout.delay(100)}
+				>
+					<Pressable 
+						onLongPress={() => handlePress(item._id, item.user._id)}
+					>
+					<Stack px="$3.5" my="$3.5" alignItems="flex-start">
+					<XStack space="$2" alignItems="center">
+						<Avatar circular size="$3" backgroundColor="$color.gray7Dark" >
+							
+						</Avatar>
+
+						{item.user._id == user._id ? (
+							<Text color="$purple10Dark" theme="alt1">{item.user.full_name}</Text>
+						): (
+							<Text theme="alt1">{item.user.full_name}</Text>
+						)}
+						
+					</XStack>
+					<XStack my="$2" >
+						<AirbnbRating
+							
+							count={5}
+							defaultRating={item.rating}
+							size={16}
+							showRating={false}
+						
+					/>
+					</XStack>
+					
+					<Paragraph >{item.content}</Paragraph>
+					{item.user._id == user._id || item.user.role == 'admin' && (
+						<Button bc="$red10Dark">Delete</Button>
+					)}
+				
+				</Stack>
+				</Pressable>
+				</Animated.View>
+		)
+	}
 
 	return (
 		<>
 			
 			<ScrollView>
-               
-				<Pressable onLongPress={handlePress}>
+				
 					<H1 mt="$10" textAlign="center"> {app?.averageRating}</H1>
 					<H4 mb="$6" theme="alt1" textAlign="center">
 						Out of 5
 					</H4>
-				</Pressable>
-			
+		
+
 				<SafeAreaView>
                     <FlatList data={reviews} renderItem={Item} />
                 </SafeAreaView>
