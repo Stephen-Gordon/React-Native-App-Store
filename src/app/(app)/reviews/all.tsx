@@ -23,7 +23,7 @@ import {
 } from "tamagui";
 
 // react native
-import { Pressable, SafeAreaView } from "react-native";
+import { Pressable, SafeAreaView, ActionSheetIOS } from "react-native";
 import { FlatList } from "react-native";
 
 // rating
@@ -35,7 +35,8 @@ import { useSession } from "../../../contexts/AuthContext";
 // Types
 import { ReviewInterface } from "../../../types";
 
-// hold menu
+// delete
+import { handleDelete } from "../../../utils/handleDelete";
 
 export default function Modal() {
 
@@ -74,10 +75,24 @@ export default function Modal() {
 		getReviews();
 	}, []);
 
-    const handleDelete = () => {
-        console.log("delete")
-    }
-
+   
+	const handlePress = () =>
+		ActionSheetIOS.showActionSheetWithOptions(
+		{
+			options: ['Cancel', 'Delete'],
+			destructiveButtonIndex: 1,
+			cancelButtonIndex: 0,
+			userInterfaceStyle: 'dark',
+		},
+		buttonIndex => {
+			if (buttonIndex === 0) {
+			// cancel action
+			} else if (buttonIndex === 1) {
+				handleDelete("123")
+			} 
+		},
+		);
+	
 
 	const Item = ({ item }: ItemProps) => (
 		
@@ -115,10 +130,12 @@ export default function Modal() {
 			
 			<ScrollView>
                
-				<H1 mt="$10" textAlign="center"> {app?.averageRating}</H1>
-				<H4 mb="$6" theme="alt1" textAlign="center">
-					Out of 5
-				</H4>
+				<Pressable onLongPress={handlePress}>
+					<H1 mt="$10" textAlign="center"> {app?.averageRating}</H1>
+					<H4 mb="$6" theme="alt1" textAlign="center">
+						Out of 5
+					</H4>
+				</Pressable>
 			
 				<SafeAreaView>
                     <FlatList data={reviews} renderItem={Item} />

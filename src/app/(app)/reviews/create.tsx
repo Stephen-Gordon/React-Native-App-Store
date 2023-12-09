@@ -37,13 +37,13 @@ export default function Page() {
   const onSubmit = (form: any) => {
 	axios.post("https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/reviews", form, {
 		headers: {
-			Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVpcjNpaXNlb29zczEyMy5jb20iLCJyb2xlIjoidXNlciIsIl9pZCI6IjY1NzFkYWYyZjBjNjJjZGM3MTA4NjE0MiIsImlhdCI6MTcwMTk2MDQzNH0.2eeckYqE-bq_c7Oo-mZFd9Q63jztsARyAIZa1U2n0LI`
+			Authorization: `Bearer ${session}`,
 		}
 	})
 		.then((response: any) => {
 
 			let review = response.data;
-			router.push({ pathname: `/id`, params: { id: appId, reviewToAdd: review, message: "reviewTo add message here" } });
+			router.push({ pathname: `/id`, params: { id: appId, reviewToAdd: review } });
 		})
 		.catch((err) => {
 			console.error(err);
