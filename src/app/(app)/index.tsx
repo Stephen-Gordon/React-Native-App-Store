@@ -114,8 +114,16 @@ export default function Page() {
 			
 	}
 
+  const colors :any = {
+		"Games": "#556ee6",
+		"Other": "#E66868",
+		"Utilities": "#f78fb3",
+		"Entertainment": "#3ec1d3",
+		"Photo & Video": "#f5cd7a",
+	}
   
-  const Item = ({ item }: AppProps) => (
+  const Item = ({ item }: AppProps) => {
+    return (
 		<Animated.View sharedTransitionTag={`${item._id}`} >
 			<Pressable
         onLongPress={() => handlePress(item._id, user._id)}
@@ -125,7 +133,7 @@ export default function Page() {
 			>
 				<Card elevate bordered m="$2" space style={{ height: 400 }}>
 					<Card.Header padded>
-						<H2 theme="alt1">{item.genre}</H2>
+						<H2 style={{ color: colors[item?.genre] }}>{item?.genre}</H2>
 						<Paragraph ></Paragraph>
 					</Card.Header>
 					<Card.Footer padded bg="$backgroundStrong">
@@ -147,13 +155,15 @@ export default function Page() {
 				</Card>
 			</Pressable>
 		</Animated.View>
-	);
+	
+    )
+  }
 
 
   return (
     <>
-  
-          <Stack mt="$15">
+      <SafeAreaView>
+        <Stack>
             
               {session && (
                 <Text> { user?.full_name }</Text>  
@@ -169,17 +179,9 @@ export default function Page() {
                  
                 </>
               )}
-          </Stack>
-           
+          </Stack>        
+      </SafeAreaView>  
     
     </>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  
-  },
-});

@@ -10,10 +10,8 @@ export default function StackLayout() {
 		<>
 			<SessionProvider>
 				<Stack
-					screenOptions={{
+					screenOptions={{	
 						contentStyle: { backgroundColor: "#151515" }, 
-						
-						
 						headerTitleStyle: {
 							fontWeight: "bold",
 						},
