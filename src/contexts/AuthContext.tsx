@@ -36,6 +36,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
         },
         signOut: () => {
           setSession(null);
+          setUser(null);
         },
         getUser: () => {
           const parsedUser = JSON.parse(user);

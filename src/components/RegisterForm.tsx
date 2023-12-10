@@ -35,24 +35,28 @@ export default function RegisterForm({ setOpen }: any) {
   
   const onSubmit = async (form: RegisterForm) => {
     try {
-      // Register user
+      // register user
       const response = await axios.post("https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/register", form);
-      
-      console.log(response);
-      const user = {
-        _id: response.data.data.user._id,
-        email: response.data.data.user.email,
-        full_name: response.data.data.user.full_name,
-      };
+      console.log(response.data.data.email);
+    
+         const user = {
+          _id: response.data.data._id,
+          email: response.data.data.email,
+          full_name: response.data.data.full_name,
+          role: response.data.data.role
+        };
 
-      // Convert user information to JSON
+      // convert user to json to be stored in local storage
       const jsonUser = JSON.stringify(user);
 
-      // Sign in the user
-      signIn(response.data.data.token, jsonUser);
+      // Sign the user in 
+      signIn(response.data.token, jsonUser);
 
       
       router.push({ pathname: `/` }); 
+    
+      
+      
     } catch (error) {
    
       console.error(error);

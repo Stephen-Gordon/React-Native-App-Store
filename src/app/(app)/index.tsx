@@ -1,27 +1,35 @@
-// tamagui config
-//import '@tamagui/core/reset.css'
-import { TamaguiProvider, ScrollView, YStack, View } from "tamagui";
-import config from "../../../tamagui.config";
-// tamagui components
-import { Button, Text, Theme } from "tamagui";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Link } from "expo-router";
-//components
-import Apps from "../../components/Apps";
-import { useEffect, useCallback } from "react";
-import { useRouter } from "expo-router";
+// tamagui
+import { TamaguiProvider, ScrollView, YStack, View, Stack, Button, Text, Card, H2, Paragraph, XStack} from "tamagui";
+
+//react
+import { useEffect, useCallback, useState } from "react";
+
+//router
+import { useRouter, Link } from "expo-router";
+
+// auth
 import { useSession } from "../../contexts/AuthContext";
-import { useState } from "react";
-import { StyleSheet, SafeAreaView,FlatList, } from "react-native";
+
+// react native 
+import { StyleSheet, SafeAreaView,FlatList, ActionSheetIOS, Pressable } from "react-native";
 import { useFonts } from "expo-font";
+
+//axios
 import axios from "axios";
+
+//animation
 import Animated from "react-native-reanimated";
-import { Pressable } from "react-native";
-import { Card, H2, Paragraph, XStack } from "tamagui";
-type ItemProps = {title: string, _id: string};
+
+// delete
+import { handleDelete } from "../../utils/handleDelete";
+
+interface AppProps {
+  item: AppInterface;
+}
 
 
 import { sharedElementTransition } from "../../utils/SharedElementTransition";
+import { AppInterface } from "../../types";
 export default function Page() {
   const [renderApps, setRenderApps] = useState(false);
   const [apps, setApps] = useState([]);
@@ -36,7 +44,6 @@ export default function Page() {
   const router = useRouter();
   const user = getUser();
   
-
   useEffect(() => {
     if (loaded) {
       if (!session) {
@@ -60,10 +67,10 @@ export default function Page() {
           console.error('Error:', error);
       }
       };
-
+      signOut()
       getApps();
       getUser();
-        
+      
 
     }
   }, [loaded]);
@@ -73,20 +80,54 @@ export default function Page() {
 
   if (!loaded) {
     return null;
-  }
+  } 
+
+  // check if user is admin to delete app
+  const handlePress = (_appIdToDelete: string, _user: string) => {
+    console.log(user)
+			if(session && user.role == 'admin') {
+				ActionSheetIOS.showActionSheetWithOptions(
+			{
+				options: ['Cancel', 'Delete'],
+				destructiveButtonIndex: 1,
+				cancelButtonIndex: 0,
+				userInterfaceStyle: 'dark',
+			},
+			buttonIndex => {
+			
+				if (buttonIndex === 0) {
+				// cancel action
+				} else if (buttonIndex === 1) {
+					handleDelete("apps", _appIdToDelete, session)
+					.then((response) => {
+						setApps(apps?.filter((app: AppInterface) => app._id !== _appIdToDelete))
+					})
+					.catch((error) => {
+						console.log(error);
+					})
+					
+				} 
+				}
+		
+			);
+			}
+		
+			
+	}
 
   
-  const Item = ({ item }: ItemProps) => (
+  const Item = ({ item }: AppProps) => (
 		<Animated.View sharedTransitionTag={`${item._id}`} >
 			<Pressable
+        onLongPress={() => handlePress(item._id, user._id)}
 				onPress={() => {
 					router.push({ pathname: `/id`, params: { id: item._id } });
 				}}
 			>
-				<Card elevate bordered m="$2" space style={{ height: 500 }}>
+				<Card elevate bordered m="$2" space style={{ height: 400 }}>
 					<Card.Header padded>
-						<H2>{item.genre}</H2>
-						<Paragraph theme="alt2"></Paragraph>
+						<H2 theme="alt1">{item.genre}</H2>
+						<Paragraph ></Paragraph>
 					</Card.Header>
 					<Card.Footer padded bg="$backgroundStrong">
 						<XStack >
@@ -112,26 +153,13 @@ export default function Page() {
 
   return (
     <>
-      <TamaguiProvider config={config}>
-       
-          <Theme name="dark"  >
-           
-              
-              <Text
-                fontSize={20}
-                hoverStyle={{
-                  color: "$colorHover",
-                }}
-              >
-                App Store
-         
-              </Text>
+  
+          <Stack mt="$15">
             
-              <Button onPress={signOut}>Sign Out</Button>
-              {session && <>
-             <Text> { user?.full_name }</Text>  
-              </>}
-
+              {session && (
+                <Text> { user?.full_name }</Text>  
+              )}
+                
               {renderApps && (
                 <>
                
@@ -142,11 +170,9 @@ export default function Page() {
                  
                 </>
               )}
+          </Stack>
            
-      
-          </Theme>
     
-      </TamaguiProvider>
     </>
   );
 }

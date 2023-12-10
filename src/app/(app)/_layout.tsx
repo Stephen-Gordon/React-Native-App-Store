@@ -12,16 +12,16 @@ export default function StackLayout() {
 				<Stack
 					screenOptions={{
 						contentStyle: { backgroundColor: "#151515" }, 
-						headerStyle: {
-							backgroundColor: "#151515",
-						},
-						headerTintColor: "#fff",
+						
+						
 						headerTitleStyle: {
 							fontWeight: "bold",
 						},
+						headerTransparent: true,
+						headerBlurEffect: "systemUltraThinMaterial"
 					}}
 				>
-					<Stack.Screen name="index" options={{ headerTitle: "Home" }} />
+					<Stack.Screen name="index" options={{ headerShown: false, headerTitle: "Home" }} />
 
 					<Stack.Screen
 						name="login"
@@ -36,7 +36,8 @@ export default function StackLayout() {
 						name="id"
 						options={{
 							// Set the presentation mode to modal for our modal route.
-							headerTitle: "Id",
+							headerTransparent: true,
+							headerTitle: "",
 							presentation: "fullScreenModal",
 							animation: "fade",
 							headerLeft: () => (
@@ -116,8 +117,7 @@ export default function StackLayout() {
 						options={{
 							// Set the presentation mode to modal for our modal route.
 							headerTitle: "Reviews",
-							presentation: "fullScreenModal",
-							animation: "fade",
+							presentation: "modal",
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {

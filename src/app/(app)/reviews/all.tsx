@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
 import Animated, { FadeIn, FadeOut, Layout } from 'react-native-reanimated';
 import { AppInterface } from "../../../types";
+import { H3 } from "tamagui";
+import { useRouter } from "expo-router";
 import {
 	YStack,
 	Text,
@@ -46,10 +48,13 @@ export default function Modal() {
     const user = getUser();
 
 	const { id } = useLocalSearchParams();
+	
 	const [app, setApp] = useState<AppInterface | null>(null);
 	// fix ts error on filter
 	const [reviews, setReviews] = useState<ReviewInterface | null | any>(null);
 
+	const router = useRouter();
+	
 	useEffect(() => {
 		const getApp = async () => {
 			try {
@@ -76,7 +81,6 @@ export default function Modal() {
 		getApp();
 		getReviews();
 	}, []);
-
    
 	const handlePress = (_reviewIdToDelete: string, _userId: string) => {
 			if(user.role == 'admin' || user._id == _userId) {
@@ -156,6 +160,7 @@ export default function Modal() {
 				</Animated.View>
 		)
 	}
+	let appId = "6558d84385951b92da7c8e05"
 
 	return (
 		<>
@@ -166,8 +171,22 @@ export default function Modal() {
 					<H4 mb="$6" theme="alt1" textAlign="center">
 						Out of 5
 					</H4>
+					<Pressable bc={"$purple10"} onPress={() => {
+					session ? router.push({ pathname: `/reviews/create`, params: {appId: "6558d84385951b92da7c8e05"} }) : router.push({ pathname: `/login` })
+                }} size="$6" theme="active">
+					<H3 color={"$purple10Dark"}>Create a Review</H3>
+				</Pressable>
 		
-
+				<Link
+					href={{
+					pathname: "/reviews/create",
+					params: { appId: appId },
+					}}
+					replace
+					asChild
+					>
+						<Button>review</Button>
+					</Link>
 				<SafeAreaView>
                     <FlatList data={reviews} renderItem={Item} />
                 </SafeAreaView>

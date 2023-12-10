@@ -16,14 +16,14 @@ export default function StackLayout() {
 						<ToastProvider>
 							<Stack
 							screenOptions={{
-								contentStyle: { backgroundColor: "#151515" },
+								/* contentStyle: { backgroundColor: "#151515" },
 								headerStyle: {
 									backgroundColor: "#151515",
 								},
 								headerTintColor: "#fff",
 								headerTitleStyle: {
 									fontWeight: "bold",
-								},
+								}, */
 							}}
 						>
 							<Stack.Screen name="(app)" options={{ headerShown:false, headerTitle: "Home" }} />
