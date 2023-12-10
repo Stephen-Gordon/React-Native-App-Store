@@ -67,15 +67,13 @@ export default function Page() {
           console.error('Error:', error);
       }
       };
-      signOut()
+      
       getApps();
       getUser();
       
 
     }
   }, [loaded]);
-
-  
 
 
   if (!loaded) {
@@ -101,6 +99,7 @@ export default function Page() {
 					handleDelete("apps", _appIdToDelete, session)
 					.then((response) => {
 						setApps(apps?.filter((app: AppInterface) => app._id !== _appIdToDelete))
+            console.log("Deleting app: ", _appIdToDelete)
 					})
 					.catch((error) => {
 						console.log(error);
