@@ -115,6 +115,7 @@ export default function Modal() {
 					<Card.Footer borderRadius={"$10"} padded bg="$backgroundStrong">
 						<YStack>
 							<H2>{app?.name}</H2>
+
 							<Separator marginVertical={15} />
 							<XStack justifyContent="space-between" alignItems="center">
 								<H2>Reviews</H2>
