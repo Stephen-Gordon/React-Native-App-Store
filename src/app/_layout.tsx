@@ -3,7 +3,6 @@ import { SessionProvider } from "../contexts/AuthContext";
 import { Button, TamaguiProvider, Theme } from "tamagui";
 import config from "../../tamagui.config";
 import { AntDesign } from '@expo/vector-icons'; 
-import { ToastProvider } from "@tamagui/toast";
 
 export default function StackLayout() {
   const router = useRouter();
@@ -13,7 +12,6 @@ export default function StackLayout() {
 					
 				<TamaguiProvider config={config}>
 					<Theme name="dark">
-						<ToastProvider>
 							<Stack
 							screenOptions={{
 								/* contentStyle: { backgroundColor: "#151515" },
@@ -38,7 +36,6 @@ export default function StackLayout() {
 
 							{/* modal" | "transparentModal" | "containedModal" | "containedTransparentModal" | "fullScreenModal" | "formSheet" | "card"  */}
 						</Stack>
-						</ToastProvider>
 					</Theme>
 				</TamaguiProvider>
 			

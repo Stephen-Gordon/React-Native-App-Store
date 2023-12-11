@@ -161,27 +161,21 @@ export default function Page() {
 
 
   return (
-    <>
-      <SafeAreaView>
-        <Stack>
-            
-              {session && (
-                <Text> { user?.full_name }</Text>  
-              )}
-                
-              {renderApps && (
-                <>
-               
-                    <FlatList
-                      data={apps}
-                      renderItem={Item}
-                    />
-                 
-                </>
-              )}
-          </Stack>        
-      </SafeAreaView>  
-    
-    </>
-  );
+		<>
+			<SafeAreaView>
+				<Stack>
+					{session && <Text> {user?.full_name}</Text>}
+					<Link asChild href="/create">
+						<Button>Create</Button>
+					</Link>
+
+					{renderApps && (
+						<>
+							<FlatList data={apps} renderItem={Item} />
+						</>
+					)}
+				</Stack>
+			</SafeAreaView>
+		</>
+	);
 }

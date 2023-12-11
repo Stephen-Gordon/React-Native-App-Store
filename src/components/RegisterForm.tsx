@@ -12,7 +12,7 @@ interface RegisterForm {
   password?: string;
   full_name?: string;
 }
-export default function RegisterForm({ setOpen }: any) {
+export default function RegisterForm( ) {
 
   const {
     control,

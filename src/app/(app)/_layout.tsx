@@ -10,16 +10,16 @@ export default function StackLayout() {
 		<>
 			<SessionProvider>
 				<Stack
-					screenOptions={{	
-						contentStyle: { backgroundColor: "#151515" }, 
+					screenOptions={{
+						contentStyle: { backgroundColor: "#151515" },
 						headerTitleStyle: {
 							fontWeight: "bold",
 						},
 						headerTransparent: true,
-						headerBlurEffect: "systemUltraThinMaterial"
+						headerBlurEffect: "systemUltraThinMaterial",
 					}}
 				>
-					<Stack.Screen name="index" options={{ headerShown: false, headerTitle: "Home" }} />
+					<Stack.Screen name="index" options={{ headerTitle: "" }} />
 
 					<Stack.Screen
 						name="login"
@@ -30,15 +30,32 @@ export default function StackLayout() {
 						}}
 					/>
 					<Stack.Screen
-
 						name="id"
 						options={{
 							// Set the presentation mode to modal for our modal route.
 							headerTransparent: true,
 							headerTitle: "",
-							headerShown: false,
+
 							presentation: "fullScreenModal",
 							animation: "fade",
+							headerLeft: () => (
+								<AntDesign
+									onPress={() => {
+										router.back();
+									}}
+									on
+									name="closecircleo"
+									size={24}
+									color="grey"
+								/>
+							),
+						}}
+					/>
+					<Stack.Screen
+						name="create"
+						options={{
+							headerTransparent: true,
+							headerTitle: "Create an App",
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {
