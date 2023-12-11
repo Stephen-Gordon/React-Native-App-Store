@@ -8,7 +8,8 @@ import {
 	SelectProps,
 	Sheet,
 	ScrollView,
-	TextArea
+	TextArea,
+	Image
 } from "tamagui";
 // form
 import { useForm, Controller } from "react-hook-form"
@@ -18,9 +19,38 @@ import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useMemo } from "react";
 
+
+import * as ImagePicker from 'expo-image-picker';
+
 export default function Page() {
 
 	const [val, setVal] = useState("genre");
+	const [image, setImage] = useState<string | null>(null);
+	const [imagePath, setImagePath] = useState<string | null>(null);
+
+	const pickImage = async () => {
+		// No permissions request is necessary for launching the image library
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [4, 3],
+			quality: 1,
+		});
+
+		/* console.log(result); */
+
+		if (!result.canceled) {
+			let uri = result.assets[0].uri
+			const parts = uri.split('/');
+			const fileName = parts[parts.length - 1];
+
+			setImagePath(fileName);
+
+			setImage(result.assets[0].uri);
+			console.log(image)
+
+		}
+	};
 
 	const {
 		control,
@@ -43,7 +73,7 @@ export default function Page() {
 	const { session } = useSession();
 
 	const onSubmit = async (form: any) => {
-		console.log(form)
+		//console.log(form)
 		try {
 			const formData: any = new FormData();
 			// Append other form data
@@ -55,15 +85,17 @@ export default function Page() {
 			formData.append('description', form.description);
 			formData.append('cont_rating', form.cont_rating);
 
-			// Append the image data to FormData if it exists
-			if (form.image) {
+			//formData.append('image', imagePath);
+			console.log(formData)
+			if (image) {
+
 				formData.append('image', {
-					uri: form.image,
-					name: 'image.jpg',
-					type: 'image/jpg',
+					uri: image,
+					name: 'image',
+					type: 'image/png'
 				});
 			}
-
+			console.log(formData)
 			const response = await axios.post(
 				"https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps",
 				formData,
@@ -74,8 +106,8 @@ export default function Page() {
 					}
 				}
 			);
-
-			router.push({ pathname: `/id`, params: { id: response.data._id } });
+			console.log("response", response.data)
+			//router.push({ pathname: `/id`, params: { id: response.data._id } });
 		} catch (error) {
 			console.error(error);
 		}
@@ -94,7 +126,11 @@ export default function Page() {
 		<>
 			<SafeAreaView>
 				<ScrollView>
-					<YStack space="$3" padding="$2">
+					<YStack mt="$10" space="$3" padding="$2">
+
+						<Button title="Pick an image from camera roll" onPress={pickImage} />
+						{image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
 						<Controller
 							control={control}
 							rules={{
