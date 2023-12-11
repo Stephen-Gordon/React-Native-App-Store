@@ -36,6 +36,7 @@ export default function StackLayout() {
 							// Set the presentation mode to modal for our modal route.
 							headerTransparent: true,
 							headerTitle: "",
+							headerShown: false,
 							presentation: "fullScreenModal",
 							animation: "fade",
 							headerLeft: () => (

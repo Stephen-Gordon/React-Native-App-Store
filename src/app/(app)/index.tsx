@@ -124,7 +124,7 @@ export default function Page() {
   
   const Item = ({ item }: AppProps) => {
     return (
-		<Animated.View sharedTransitionTag={`${item._id}`} >
+		<Animated.View sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${item._id}`} >
 			<Pressable
         onLongPress={() => handlePress(item._id, user._id)}
 				onPress={() => {

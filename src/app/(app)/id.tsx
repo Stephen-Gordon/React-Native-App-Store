@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import Animated from "react-native-reanimated";
 import { AppInterface, ReviewInterface } from "../../types";
+import { sharedElementTransition } from "../../utils/SharedElementTransition";
 
 import {
 	YStack,
@@ -90,7 +91,7 @@ export default function Modal() {
 
   return (
 		<SafeAreaView>
-			<Animated.ScrollView sharedTransitionTag={`${id}`} style={{height: '100%', backgroundColor: '#151515'}}>
+			<Animated.ScrollView sharedTransitionStyle={sharedElementTransition}  sharedTransitionTag={`${id}`} style={{ backgroundColor: '#151515'}}>
 				<Card>
 					{/* <Image
 						source={{
