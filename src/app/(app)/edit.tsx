@@ -14,11 +14,11 @@ import {
 } from "tamagui";
 // form
 import { useForm, Controller } from "react-hook-form"
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { useSession } from "../../contexts/AuthContext";
 //axios
 import axios from "axios";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ImageBackground } from "react-native";
 
 //react
 import { useState, useMemo, useEffect } from "react";
@@ -27,6 +27,7 @@ import { useState, useMemo, useEffect } from "react";
 import { AppInterface } from "../../types";
 
 import { useLocalSearchParams } from "expo-router";
+import { BlurView } from "expo-blur";
 
 export default function Page() {
 
@@ -36,6 +37,7 @@ export default function Page() {
     //hooks
     const { id } = useLocalSearchParams();
     const { session } = useSession();
+    const { navigation } = useNavigation()
     const {
         control,
         handleSubmit,
@@ -52,7 +54,7 @@ export default function Page() {
             image: null
         },
     });
-
+    navigation
 
     useEffect(() => {
         const getApp = async () => {
@@ -99,259 +101,273 @@ export default function Page() {
         { name: "Utilities" },
     ];
 
+    
 
     return (
-        <>
-            <SafeAreaView>
-                <ScrollView>
-                    <YStack space="$3" padding="$2">
-                        <YStack>
-                            <Label htmlFor="name">Name</Label>
-                            <Controller
-                                control={control}
-                                rules={{
-                                    required: true,
-                                }}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <Input
-                                        size="$6"
-                                        placeholder={app?.name}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={app?.name}
-                                    />
-                                )}
-                                name="name"
-                            />
-                        </YStack>
+			<>
+				<SafeAreaView>
+					<ScrollView style={{}}>
+						<ImageBackground
+							style={{ flex: 1, backgroundColor: "#00000" }}
+							source={{
+								width: 1000,
+								height: 1000,
+								uri: `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`,
+							}}
+							blurRadius={0}
+						>
+							<BlurView intensity={100} tint="dark">
+								<YStack
+									space="$3"
+									padding="$2"
+									style={{ flex: 1, backgroundColor: "#000", opacity: "0.7" }}
+								>
+									<Image
+										resizeMode="contain"
+										alignSelf="center"
+										source={{
+											width: 300,
+											height: 300,
+											uri: `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`,
+										}}
+									/>
+									<YStack>
+										<Label htmlFor="name">Name</Label>
+										<Controller
+											control={control}
+											rules={{
+												required: true,
+											}}
+											render={({ field: { onChange, onBlur, value } }) => (
+												<Input
+													size="$6"
+													placeholder={app?.name}
+													onBlur={onBlur}
+													onChangeText={onChange}
+													value={app?.name}
+												/>
+											)}
+											name="name"
+										/>
+									</YStack>
 
-                        <Controller
-                            control={control}
-                            rules={{
-                                maxLength: 100,
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Input
-                                    size="$6"
-                                    placeholder="App Size in Bytes..."
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={app?.size_bytes}
-                                />
-                            )}
-                            name="size_bytes"
-                        />
-                        <Controller
-                            control={control}
-                            rules={{
-                                maxLength: 100,
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Input
-                                    size="$6"
-                                    placeholder="Price..."
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={app?.price}
-                                />
-                            )}
-                            name="price"
-                        />
-                        <Controller
-                            control={control}
-                            rules={{
-                                maxLength: 100,
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Select
-                                    id="genre"
-                                    value={val}
-                                    onValueChange={(val) => {
-                                        setVal(val);
-                                        onChange(val);
-                                    }}
-                                    disablePreventBodyScroll
-                                    size="$6"
-                                >
-                                    <Select.Trigger>
-                                        <Select.Value placeholder="Something" />
-                                    </Select.Trigger>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Input
+												size="$6"
+												placeholder="App Size in Bytes..."
+												onBlur={onBlur}
+												onChangeText={onChange}
+												value={app?.size_bytes}
+											/>
+										)}
+										name="size_bytes"
+									/>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Input
+												size="$6"
+												placeholder="Price..."
+												onBlur={onBlur}
+												onChangeText={onChange}
+												value={app?.price}
+											/>
+										)}
+										name="price"
+									/>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Select
+												id="genre"
+												value={val}
+												onValueChange={(val) => {
+													setVal(val);
+													onChange(val);
+												}}
+												disablePreventBodyScroll
+												size="$6"
+											>
+												<Select.Trigger>
+													<Select.Value placeholder="Something" />
+												</Select.Trigger>
 
-                                    <Adapt when="sm" platform="touch">
-                                        <Sheet
-                                            modal
-                                            dismissOnSnapToBottom
-                                            animationConfig={{
-                                                type: "spring",
-                                                mass: 1,
-                                                stiffness: 100,
-                                                damping: 200,
-                                            }}
-                                        >
-                                            <Sheet.Frame>
-                                                <Sheet.ScrollView>
-                                                    <Adapt.Contents />
-                                                </Sheet.ScrollView>
-                                            </Sheet.Frame>
-                                            <Sheet.Overlay
-                                                animation="lazy"
-                                                enterStyle={{ opacity: 0 }}
-                                                exitStyle={{ opacity: 0 }}
-                                            />
-                                        </Sheet>
-                                    </Adapt>
+												<Adapt when="sm" platform="touch">
+													<Sheet
+														modal
+														dismissOnSnapToBottom
+														animationConfig={{
+															type: "spring",
+															mass: 1,
+															stiffness: 100,
+															damping: 200,
+														}}
+													>
+														<Sheet.Frame>
+															<Sheet.ScrollView>
+																<Adapt.Contents />
+															</Sheet.ScrollView>
+														</Sheet.Frame>
+														<Sheet.Overlay
+															animation="lazy"
+															enterStyle={{ opacity: 0 }}
+															exitStyle={{ opacity: 0 }}
+														/>
+													</Sheet>
+												</Adapt>
 
-                                    <Select.Content zIndex={200000}>
-                                        <Select.Viewport minWidth={200}>
-                                            <Select.Group>
-                                                <Select.Label>Genre</Select.Label>
-                                                {useMemo(
-                                                    () =>
-                                                        items.map((item, i) => {
-                                                            return (
-                                                                <Select.Item
-                                                                    index={i}
-                                                                    key={item.name}
-                                                                    value={item.name}
-                                                                >
-                                                                    <Select.ItemText>
-                                                                        {item.name}
-                                                                    </Select.ItemText>
-                                                                    <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
-                                                                </Select.Item>
-                                                            );
-                                                        }),
-                                                    [items]
-                                                )}
-                                            </Select.Group>
-                                        </Select.Viewport>
-                                    </Select.Content>
-                                </Select>
-                            )}
-                            name="genre"
-                        />
-                        <Controller
-                            control={control}
-                            rules={{
-                                maxLength: 100,
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Select
-                                    id="cont_rating"
-                                    value={app?.cont_rating}
-                                    onValueChange={(val) => {
-                                        setVal(val);
-                                        onChange(val);
-                                    }}
-                                    disablePreventBodyScroll
-                                    size="$6"
-                                >
-                                    <Select.Trigger>
-                                        <Select.Value placeholder="Something" />
-                                    </Select.Trigger>
+												<Select.Content zIndex={200000}>
+													<Select.Viewport minWidth={200}>
+														<Select.Group>
+															<Select.Label>Genre</Select.Label>
+															{useMemo(
+																() =>
+																	items.map((item, i) => {
+																		return (
+																			<Select.Item
+																				index={i}
+																				key={item.name}
+																				value={item.name}
+																			>
+																				<Select.ItemText>
+																					{item.name}
+																				</Select.ItemText>
+																				<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+																			</Select.Item>
+																		);
+																	}),
+																[items]
+															)}
+														</Select.Group>
+													</Select.Viewport>
+												</Select.Content>
+											</Select>
+										)}
+										name="genre"
+									/>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Select
+												id="cont_rating"
+												value={app?.cont_rating}
+												onValueChange={(val) => {
+													setVal(val);
+													onChange(val);
+												}}
+												disablePreventBodyScroll
+												size="$6"
+											>
+												<Select.Trigger>
+													<Select.Value placeholder="Something" />
+												</Select.Trigger>
 
-                                    <Adapt when="sm" platform="touch">
-                                        <Sheet
-                                            modal
-                                            dismissOnSnapToBottom
-                                            animationConfig={{
-                                                type: "spring",
-                                                mass: 1,
-                                                stiffness: 100,
-                                                damping: 200,
-                                            }}
-                                        >
-                                            <Sheet.Frame>
-                                                <Sheet.ScrollView>
-                                                    <Adapt.Contents />
-                                                </Sheet.ScrollView>
-                                            </Sheet.Frame>
-                                            <Sheet.Overlay
-                                                animation="lazy"
-                                                enterStyle={{ opacity: 0 }}
-                                                exitStyle={{ opacity: 0 }}
-                                            />
-                                        </Sheet>
-                                    </Adapt>
+												<Adapt when="sm" platform="touch">
+													<Sheet
+														modal
+														dismissOnSnapToBottom
+														animationConfig={{
+															type: "spring",
+															mass: 1,
+															stiffness: 100,
+															damping: 200,
+														}}
+													>
+														<Sheet.Frame>
+															<Sheet.ScrollView>
+																<Adapt.Contents />
+															</Sheet.ScrollView>
+														</Sheet.Frame>
+														<Sheet.Overlay
+															animation="lazy"
+															enterStyle={{ opacity: 0 }}
+															exitStyle={{ opacity: 0 }}
+														/>
+													</Sheet>
+												</Adapt>
 
-                                    <Select.Content zIndex={200000}>
-                                        <Select.Viewport minWidth={200}>
-                                            <Select.Group>
-                                                <Select.Label>Genre</Select.Label>
-                                                <Select.Item
-                                                    index={0}
-                                                    key={"+4"}
-                                                    value={"+4"}
-                                                >
-                                                    <Select.ItemText>
-                                                        {"+4"}
-                                                    </Select.ItemText>
-                                                    <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
-                                                </Select.Item>
-                                                <Select.Item
-                                                    index={1}
-                                                    key={"+18"}
-                                                    value={"+18"}
-                                                >
-                                                    <Select.ItemText>
-                                                        {"+18"}
-                                                    </Select.ItemText>
-                                                    <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
-                                                </Select.Item>
-                                            </Select.Group>
-                                        </Select.Viewport>
-                                    </Select.Content>
-                                </Select>
-                            )}
-                            name="cont_rating"
-                        />
+												<Select.Content zIndex={200000}>
+													<Select.Viewport minWidth={200}>
+														<Select.Group>
+															<Select.Label>Genre</Select.Label>
+															<Select.Item index={0} key={"+4"} value={"+4"}>
+																<Select.ItemText>{"+4"}</Select.ItemText>
+																<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+															</Select.Item>
+															<Select.Item index={1} key={"+18"} value={"+18"}>
+																<Select.ItemText>{"+18"}</Select.ItemText>
+																<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+															</Select.Item>
+														</Select.Group>
+													</Select.Viewport>
+												</Select.Content>
+											</Select>
+										)}
+										name="cont_rating"
+									/>
 
-                        <Controller
-                            control={control}
-                            rules={{
-                                maxLength: 100,
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Input
-                                    size="$6"
-                                    placeholder="Version..."
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={app?.ver}
-                                />
-                            )}
-                            name="ver"
-                        />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextArea
-                                    rows={10}
-                                    size="$4"
-                                    borderWidth={2}
-                                    placeholder="What does your app do..."
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={app?.description}
-                                />
-                            )}
-                            name="description"
-                        />
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Input
+												size="$6"
+												placeholder="Version..."
+												onBlur={onBlur}
+												onChangeText={onChange}
+												value={app?.ver}
+											/>
+										)}
+										name="ver"
+									/>
+									<Controller
+										control={control}
+										rules={{
+											required: true,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<TextArea
+												rows={10}
+												size="$4"
+												borderWidth={2}
+												placeholder="What does your app do..."
+												onBlur={onBlur}
+												onChangeText={onChange}
+												value={app?.description}
+											/>
+										)}
+										name="description"
+									/>
 
-                        <Button
-                            bc={"$purple10"}
-                            onPress={handleSubmit(onSubmit)}
-                            size="$6"
-                            theme="active"
-                        >
-                            Publish your App
-                        </Button>
-                    </YStack>
-                </ScrollView>
-            </SafeAreaView>
-        </>
-    );
+									<Button
+										bc={"$purple10"}
+										onPress={handleSubmit(onSubmit)}
+										size="$6"
+										theme="active"
+									>
+										Publish your App
+									</Button>
+								</YStack>
+							</BlurView>
+						</ImageBackground>
+					</ScrollView>
+				</SafeAreaView>
+			</>
+		);
 }
