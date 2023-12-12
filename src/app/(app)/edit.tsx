@@ -388,7 +388,7 @@ export default function Page() {
                                             onBlur={onBlur}
                                             onChangeText={(text) => {
                                                 onChange(text);
-                                                setValue('name', text); // Manually update the value for React Hook Form
+                                                setValue('ver', text); // Manually update the value for React Hook Form
                                             }}
                                             value={value}
                                         />
@@ -409,7 +409,7 @@ export default function Page() {
                                             onBlur={onBlur}
                                             onChangeText={(text) => {
                                                 onChange(text);
-                                                setValue('name', text); // Manually update the value for React Hook Form
+                                                setValue('description', text); // Manually update the value for React Hook Form
                                             }}
                                             value={value}
                                         />
