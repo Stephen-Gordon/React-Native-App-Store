@@ -41,6 +41,7 @@ export default function Modal() {
 			try {
 				const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps/${id}`);
 				setApp(response.data);
+				console.log(app?._id)
 
 			} catch (error) {
 				console.error('Error:', error);
