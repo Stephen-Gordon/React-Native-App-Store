@@ -2,11 +2,11 @@ import { Stack, useRouter } from "expo-router";
 import { SessionProvider } from "../../contexts/AuthContext";
 import { Button, TamaguiProvider, Theme } from "tamagui";
 import config from "../../../tamagui.config";
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
 export default function StackLayout() {
-  const router = useRouter();
-  return (
+	const router = useRouter();
+	return (
 		<>
 			<SessionProvider>
 				<Stack
@@ -35,7 +35,7 @@ export default function StackLayout() {
 							// Set the presentation mode to modal for our modal route.
 							headerTransparent: true,
 							headerTitle: "",
-
+							headerShown: false,
 							presentation: "fullScreenModal",
 							animation: "fade",
 							headerLeft: () => (

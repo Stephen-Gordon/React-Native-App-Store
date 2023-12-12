@@ -20,7 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useMemo } from "react";
 import { Platform } from "react-native";
 
-
+//image picker
 import * as ImagePicker from 'expo-image-picker';
 
 export default function Page() {
@@ -50,7 +50,7 @@ export default function Page() {
 
 			setImage(uri);
 			console.log("image", image);
-			
+
 
 		}
 	};
@@ -87,15 +87,15 @@ export default function Page() {
 			formData.append('ver', form.ver);
 			formData.append('description', form.description);
 			formData.append('cont_rating', form.cont_rating);
-			
-	
+
+
 			formData.append("image", {
 				uri: image,
 				type: "image/jpeg",
 				name: "image.jpg",
-			}); 
+			});
 			console.log("Form Data", formData)
-		
+
 			const response = await axios.post(
 				"https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps",
 				formData,
@@ -103,11 +103,11 @@ export default function Page() {
 					headers: {
 						Authorization: `Bearer ${session}`,
 						'Content-Type': 'multipart/form-data',
-						
+
 					}
 				}
 			);
-			console.log("response", response.data) 
+			console.log("response", response.data)
 			router.push({ pathname: `/id`, params: { id: response.data._id } });
 		} catch (error) {
 			console.error(error);
