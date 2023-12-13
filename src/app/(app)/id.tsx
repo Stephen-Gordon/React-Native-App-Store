@@ -95,11 +95,10 @@ export default function Modal() {
 		<Animated.ScrollView sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${id}`} style={{ backgroundColor: '#151515' }}>
 			<Card>
 				<Image
-					resizeMode="contain"
+					resizeMode="cover"
 					alignSelf="center"
+					style={{ width: '100%', height: 300 }}
 					source={{
-						width: 300,
-						height: 300,
 						uri: `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`,
 					}}
 				/>
