@@ -91,45 +91,45 @@ export default function Modal() {
 	}
 
 	return (
-		<SafeAreaView>
-			<Animated.ScrollView sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${id}`} style={{ backgroundColor: '#151515' }}>
-				<Card>
-					<Image
-						resizeMode="contain"
-						alignSelf="center"
-						source={{
-							width: 300,
-							height: 300,
-							uri: `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`,
-						}}
-					/>
-					<Card.Header padded>
-						<H2 style={{ color: colors[app?.genre] }}>{app?.genre}</H2>
-						<Paragraph theme="alt2"></Paragraph>
-					</Card.Header>
-					<Card.Footer borderRadius={"$10"} padded bg="$backgroundStrong">
-						<YStack>
-							<H2>{app?.name}</H2>
 
-							<Separator marginVertical={15} />
-							<XStack justifyContent="space-between" alignItems="center">
-								<H2>Reviews</H2>
-								<Pressable
-									onPress={() => {
-										handleReviewsPage();
-									}}
-								>
-									<H4 color="$purple10Dark">See all</H4>
-								</Pressable>
-							</XStack>
-							<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
-							<Separator marginVertical={15} />
-							<Paragraph>{app?.description}</Paragraph>
-						</YStack>
-					</Card.Footer>
-					<Card.Background></Card.Background>
-				</Card>
-			</Animated.ScrollView>
-		</SafeAreaView>
+		<Animated.ScrollView sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${id}`} style={{ backgroundColor: '#151515' }}>
+			<Card>
+				<Image
+					resizeMode="contain"
+					alignSelf="center"
+					source={{
+						width: 300,
+						height: 300,
+						uri: `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`,
+					}}
+				/>
+				<Card.Header padded>
+					<H2 style={{ color: colors[app?.genre] }}>{app?.genre}</H2>
+					<Paragraph theme="alt2"></Paragraph>
+				</Card.Header>
+				<Card.Footer borderRadius={"$10"} padded bg="$backgroundStrong">
+					<YStack>
+						<H2>{app?.name}</H2>
+
+						<Separator marginVertical={15} />
+						<XStack justifyContent="space-between" alignItems="center">
+							<H2>Reviews</H2>
+							<Pressable
+								onPress={() => {
+									handleReviewsPage();
+								}}
+							>
+								<H4 color="$purple10Dark">See all</H4>
+							</Pressable>
+						</XStack>
+						<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
+						<Separator marginVertical={15} />
+						<Paragraph>{app?.description}</Paragraph>
+					</YStack>
+				</Card.Footer>
+				<Card.Background></Card.Background>
+			</Card>
+		</Animated.ScrollView>
+
 	);
 }

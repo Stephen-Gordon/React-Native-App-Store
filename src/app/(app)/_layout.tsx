@@ -16,7 +16,7 @@ export default function StackLayout() {
 							fontWeight: "bold",
 						},
 						headerTransparent: true,
-						headerBlurEffect: "systemUltraThinMaterial",
+						/* headerBlurEffect: "systemUltraThinMaterial", */
 					}}
 				>
 					<Stack.Screen name="index" options={{ headerTitle: "" }} />
@@ -34,8 +34,8 @@ export default function StackLayout() {
 						options={{
 							// Set the presentation mode to modal for our modal route.
 							headerTransparent: true,
-							headerTitle: "",
-							headerShown: false,
+
+							headerShown: true,
 							presentation: "fullScreenModal",
 							animation: "fade",
 							headerLeft: () => (
