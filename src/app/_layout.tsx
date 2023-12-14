@@ -1,44 +1,45 @@
-import { Stack, useRouter } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { SessionProvider } from "../contexts/AuthContext";
 import { Button, TamaguiProvider, Theme } from "tamagui";
 import config from "../../tamagui.config";
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
-export default function StackLayout() {
-  const router = useRouter();
-  return (
+export default function TabLayout() {
+	const router = useRouter();
+	return (
 		<>
 			<SessionProvider>
-					
+
 				<TamaguiProvider config={config}>
 					<Theme name="dark">
-							<Stack
+						<Tabs
 							screenOptions={{
-								/* contentStyle: { backgroundColor: "#151515" },
-								headerStyle: {
-									backgroundColor: "#151515",
-								},
-								headerTintColor: "#fff",
+								contentStyle: { backgroundColor: "#151515" },
 								headerTitleStyle: {
 									fontWeight: "bold",
-								}, */
+								},
+
+								/* headerBlurEffect: "systemUltraThinMaterial", */
+							}}
+							screenOptions={{
+								headerShown: false,
+								headerTransparent: true,
+
+
 							}}
 						>
-							<Stack.Screen name="(app)" options={{ headerShown:false, headerTitle: "Home" }} />
+							<Tabs.Screen name="(app)" options={{ headerShown: false, headerTitle: "apps" }} />
+							<Tabs.Screen name="(profile)" options={{ headerShown: false, headerTitle: "profile" }} />
 
-						{/* 	<Stack.Screen
-								name="(reviews)"
-								options={{ headerTitle: "reviews", title: "reviews", headerShown:false,}}
-							/> */}
-			
 
-							
 
-							{/* modal" | "transparentModal" | "containedModal" | "containedTransparentModal" | "fullScreenModal" | "formSheet" | "card"  */}
-						</Stack>
+
+
+
+						</Tabs>
 					</Theme>
 				</TamaguiProvider>
-			
+
 			</SessionProvider>
 		</>
 	);

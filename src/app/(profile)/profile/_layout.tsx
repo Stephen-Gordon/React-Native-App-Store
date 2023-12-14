@@ -12,18 +12,14 @@ export default function StackLayout() {
 					headerStyle: {
 						backgroundColor: "#151515",
 					},
+					headerShown: false,
 					headerTintColor: "#fff",
 					headerTitleStyle: {
 						fontWeight: "bold",
 					},
 				}}
 			>
-				{/* <Stack.Screen name="index" options={{ headerTitle: "Review Home" }} />
 
-	 */}
-
-
-				{/* modal" | "transparentModal" | "containedModal" | "containedTransparentModal" | "fullScreenModal" | "formSheet" | "card"  */}
 			</Stack>
 
 		</>

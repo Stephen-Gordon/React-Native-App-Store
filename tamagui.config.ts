@@ -7,6 +7,14 @@
 import { config } from '@tamagui/config/v2'
 
 import { createTamagui } from 'tamagui'
+/* config.themes = {
+  dark: {
+    background: '#13151a',
+    backgroundStrong: '#1d1f27',
+    color: 'white',
+  }
+
+} */
 const tamaguiConfig = createTamagui(config)
 // this makes typescript properly type everything based on the config
 
@@ -14,7 +22,7 @@ type Conf = typeof tamaguiConfig
 
 declare module 'tamagui' {
 
-  interface TamaguiCustomConfig extends Conf {}
+  interface TamaguiCustomConfig extends Conf { }
 
 }
 export default tamaguiConfig
