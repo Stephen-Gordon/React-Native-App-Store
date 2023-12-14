@@ -19,7 +19,7 @@ export default function StackLayout() {
 						/* headerBlurEffect: "systemUltraThinMaterial", */
 					}}
 				>
-					<Stack.Screen name="index" options={{ headerTitle: "" }} />
+					<Stack.Screen name="index" options={{ headerShown: false, headerTitle: "" }} />
 
 					<Stack.Screen
 						name="login"
