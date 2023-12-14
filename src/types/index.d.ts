@@ -10,21 +10,22 @@ export interface AppInterface {
     description: string;
     size_bytes: number;
     price: string
-    ver:   string;
+    ver: string;
     genre: string;
     reviews: ReviewInterface[];
     users: string[];
     image_path: string;
     averageRating: number;
     __v: number;
+    cont_rating: string;
 
 }
 
 export interface ReviewInterface {
-	_id: string;
-	user: string;
-	app: string;
-	rating: number;
-	content: string;
+    _id: string;
+    user: string;
+    app: string;
+    rating: number;
+    content: string;
     __v: number;
 }
