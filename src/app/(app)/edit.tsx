@@ -41,7 +41,7 @@ export default function Page() {
     // state
     const [val, setVal] = useState("genre");
     const [app, setApp] = useState<AppInterface | null>(null);
-    const [image, setImage] = useState<string | null>(`https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`);
+    const [image, setImage] = useState<string | null>(null);
 
     //hooks
     const { id } = useLocalSearchParams();
@@ -56,7 +56,7 @@ export default function Page() {
             try {
                 const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps/${id}`);
                 setApp(response.data);
-                setImage(`https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`);
+
                 const { name, size_bytes, price, genre, ver, description, cont_rating, image_path } = response.data;
                 setValue('name', name);
                 setValue('size_bytes', size_bytes);
@@ -66,7 +66,7 @@ export default function Page() {
                 setValue('description', description);
                 setValue('cont_rating', cont_rating);
                 setValue('image', image_path);
-
+                console.log(app?.cont_rating)
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -78,6 +78,10 @@ export default function Page() {
 
 
     }, [setValue])
+
+    useEffect(() => {
+        setImage(`https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`);
+    }, [app])
 
 
     const pickImage = async () => {
@@ -129,8 +133,7 @@ export default function Page() {
                     }
                 }
             );
-            console.log("response", response.data)
-            //router.push({ pathname: `/id`, params: { id: response.data._id } });
+            /*   router.push({ pathname: `/id`, params: { id: response.data._id } }); */
         } catch (error) {
             console.error(error);
         }
@@ -260,6 +263,7 @@ export default function Page() {
 
                                             <Adapt when="sm" platform="touch">
                                                 <Sheet
+                                                    snapPointsMode="fit"
                                                     modal
                                                     dismissOnSnapToBottom
                                                     animationConfig={{
@@ -270,9 +274,9 @@ export default function Page() {
                                                     }}
                                                 >
                                                     <Sheet.Frame>
-                                                        <Sheet.ScrollView>
-                                                            <Adapt.Contents />
-                                                        </Sheet.ScrollView>
+
+                                                        <Adapt.Contents />
+
                                                     </Sheet.Frame>
                                                     <Sheet.Overlay
                                                         animation="lazy"
@@ -329,12 +333,13 @@ export default function Page() {
                                             size="$6"
                                         >
                                             <Select.Trigger>
-                                                <Select.Value />
+                                                <Select.Value placeholder="Content Rating" />
                                             </Select.Trigger>
 
                                             <Adapt when="sm" platform="touch">
                                                 <Sheet
                                                     modal
+                                                    snapPointsMode="fit"
                                                     dismissOnSnapToBottom
                                                     animationConfig={{
                                                         type: "spring",
@@ -344,9 +349,9 @@ export default function Page() {
                                                     }}
                                                 >
                                                     <Sheet.Frame>
-                                                        <Sheet.ScrollView>
-                                                            <Adapt.Contents />
-                                                        </Sheet.ScrollView>
+
+                                                        <Adapt.Contents />
+
                                                     </Sheet.Frame>
                                                     <Sheet.Overlay
                                                         animation="lazy"
@@ -359,13 +364,13 @@ export default function Page() {
                                             <Select.Content zIndex={200000}>
                                                 <Select.Viewport minWidth={200}>
                                                     <Select.Group>
-                                                        <Select.Label>Genre</Select.Label>
+                                                        <Select.Label>Content Rating</Select.Label>
                                                         <Select.Item index={0} key={"+4"} value={"+4"}>
-                                                            <Select.ItemText>{"+4"}</Select.ItemText>
+                                                            <Select.ItemText>"+4"</Select.ItemText>
                                                             <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
                                                         </Select.Item>
                                                         <Select.Item index={1} key={"+18"} value={"+18"}>
-                                                            <Select.ItemText>{"+18"}</Select.ItemText>
+                                                            <Select.ItemText>"+18"</Select.ItemText>
                                                             <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
                                                         </Select.Item>
                                                     </Select.Group>
@@ -424,7 +429,7 @@ export default function Page() {
                                     size="$6"
                                     theme="active"
                                 >
-                                    Publish your App
+                                    Update
                                 </Button>
                             </YStack>
                         </BlurView>
