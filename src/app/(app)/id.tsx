@@ -5,7 +5,7 @@ import axios from "axios";
 import Animated from "react-native-reanimated";
 import { AppInterface, ReviewInterface } from "../../types";
 import { sharedElementTransition } from "../../utils/SharedElementTransition";
-import { ScrollView } from "react-native";
+import { ScrollView, ImageBackground, Touchable, useWindowDimensions  } from "react-native";
 import {
 	YStack,
 	Text,
@@ -16,24 +16,36 @@ import {
 	Separator,
 	H4,
 	Button,
+	H6,
+	Stack,
+	View,
+	H3
 } from "tamagui";
 
+// blur
+import { BlurView } from "expo-blur";
 
+//icon
+import { FontAwesome } from "@expo/vector-icons"; 
 
 import ReviewsPreview from "../../components/reviews/ReviewsPreview";
-import { Pressable, SafeAreaView, View } from "react-native";
+import { Pressable, SafeAreaView } from "react-native";
 import { useRouter, Link } from "expo-router";
 
 // Contexts
 import { useSession } from "../../contexts/AuthContext";
-
+// html viewer
+import RenderHtml from 'react-native-render-html';
 export default function Modal() {
 
 	const { id, message, reviewToAdd, image } = useLocalSearchParams();
+	const { width } = useWindowDimensions();
+		const { session } = useSession();
+
+	
 	const [app, setApp] = useState<AppInterface | null>(null);
 	const [reviews, setReviews] = useState<ReviewInterface | null>(null);
 	const router = useRouter();
-	const { session } = useSession();
 
 	useEffect(() => {
 		const getApp = async () => {
@@ -82,55 +94,98 @@ export default function Modal() {
 	}
 
 	const colors: any = {
-		"Games": "#2b2b2b",
-		"Other": "#00FF00",
-		"Utilities": "#0000FF",
-		"Entertainment": "#FFFF00",
-		"Photo & Video": "#FF00FF",
-	}
+		Games: "$pink8Dark",
+		Other: "#green8Dark",
+		Utilities: "#yellow8Dark",
+		Entertainment: "#orange8Dark",
+		"Photo & Video": "$blue8Dark",
+	};
 
 	return (
-
-		<ScrollView style={{ backgroundColor: '#151515' }}>
-
-			<Card>
-				<Animated.Image
-					sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${id}`}
-					resizeMode="cover"
-					alignSelf="center"
-					style={{ width: '100%', height: 300 }}
+		<View>
+			<ScrollView>
+				<ImageBackground
+					style={{ flex: 1, backgroundColor: "#00000" }}
 					source={{
+						width: 1000,
+						height: 2000,
 						uri: image,
 					}}
-				/>
-				<Card.Header padded>
-					<H2 style={{ color: colors[app?.genre] }}>{app?.genre}</H2>
-					<Paragraph theme="alt2"></Paragraph>
-				</Card.Header>
-				<Card.Footer borderRadius={"$10"} padded bg="$backgroundStrong">
-					<YStack>
-						<H2>{app?.name}</H2>
-
-						<Separator marginVertical={15} />
-						<XStack justifyContent="space-between" alignItems="center">
-							<H2>Reviews</H2>
-							<Pressable
-								onPress={() => {
-									handleReviewsPage();
+				>
+					<BlurView intensity={100} tint="dark">
+						<Stack style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
+							<Animated.Image
+								sharedTransitionStyle={sharedElementTransition}
+								sharedTransitionTag={`${id}`}
+								resizeMode="cover"
+								alignSelf="center"
+								style={{ width: "100%", height: 300 }}
+								source={{
+									uri: image,
 								}}
-							>
-								<H4 color="$purple10Dark">See all</H4>
-							</Pressable>
-						</XStack>
-						<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
-						<Separator marginVertical={15} />
-						<Paragraph>{app?.description}</Paragraph>
-					</YStack>
-				</Card.Footer>
-				<Card.Background></Card.Background>
-			</Card>
+							/>
 
-		</ScrollView>
+							<YStack padding="$4">
+								<View
+									borderRadius={"$10"}
+									mb="$2"
+									py="$2"
+									px="$4"
+									bg={colors[app?.genre]}
+									style={{ width: "auto", alignSelf: "flex-start" }}
+								>
+									<Text>{app?.genre}</Text>
+								</View>
+								<H2>{app?.name}</H2>
+								<Separator marginVertical={30} />
+								<YStack>
+									<H3>Reviews</H3>
+									<XStack justifyContent="space-between" alignItems="center">
+										<XStack justifyContent="space-between" alignItems="center">
+											<FontAwesome name="star" size={24} color="white" />
+											<H3 ml="$2" theme="alt1">
+												{app?.averageRating}
+											</H3>
+										</XStack>
+										<Pressable
+											onPress={() => {
+												session
+													? router.push({
+															pathname: `/reviews/create`,
+															params: { appId: app?._id },
+													  })
+													: router.push({ pathname: `/login` });
+											}}
+											theme="active"
+										>
+											<FontAwesome
+												name="pencil-square-o"
+												size={24}
+												color="white"
+											/>
+										</Pressable>
+									</XStack>
+								</YStack>
 
+								<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
+								<Button variant="outlined">
+									<Pressable
+										onPress={() => {
+											handleReviewsPage();
+										}}
+									>
+										<H6 color="$purple10Dark">See all</H6>
+									</Pressable>
+								</Button>
+								<Separator marginVertical={15} />
+								<View>
+									<RenderHtml contentWidth={width} source={app?.description} />
+								</View>
+							</YStack>
+						</Stack>
+					</BlurView>
+				</ImageBackground>
+			</ScrollView>
+		</View>
 	);
 }

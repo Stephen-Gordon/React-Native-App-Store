@@ -133,7 +133,7 @@ export default function Page() {
                     }
                 }
             );
-            /*   router.push({ pathname: `/id`, params: { id: response.data._id } }); */
+               router.push({ pathname: `/id`, params: { id: response.data._id } }); 
         } catch (error) {
             console.error(error);
         }
@@ -150,292 +150,285 @@ export default function Page() {
 
 
     return (
-        <>
-            <SafeAreaView>
-                <ScrollView style={{}}>
-                    <ImageBackground
-                        style={{ flex: 1, backgroundColor: "#00000" }}
-                        source={{
-                            width: 1000,
-                            height: 1000,
-                            uri: image,
-                        }}
-                        blurRadius={0}
-                    >
-                        <BlurView intensity={100} tint="dark">
-                            <YStack
-                                space="$3"
-                                padding="$2"
-                                style={{ flex: 1, backgroundColor: "#000", opacity: "0.7" }}
-                            >
-                                <Image
-                                    onLongPress={pickImage}
-                                    resizeMode="contain"
-                                    alignSelf="center"
-                                    source={{
-                                        width: 300,
-                                        height: 300,
-                                        uri: image,
-                                    }}
-                                />
-                                <YStack>
-                                    <Label htmlFor="name">Name</Label>
-                                    <Controller
-                                        control={control}
-                                        rules={{
-                                            required: true,
-                                        }}
-                                        render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input
-                                                size="$6"
-                                                onBlur={onBlur}
-                                                onChangeText={(text) => {
-                                                    onChange(text);
-                                                    setValue('name', text); // Manually update the value for React Hook Form
-                                                }}
-                                                value={value}
-                                            />
-                                        )}
-                                        name="name"
-                                        defaultValue={""}
-                                    />
-                                </YStack>
+			<>
+				<SafeAreaView style={{ width: "100%" }}>
+					<ScrollView style={{ width: "100%" }}>
+						<ImageBackground
+							style={{ width: "100%" }}
+							style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.7)" }}
+							source={{
+								width: 1000,
+								height: 1000,
+								uri: image,
+							}}
+							blurRadius={0}
+						>
+							<BlurView intensity={100} tint="dark">
+								<YStack space="$3" padding="$2" style={{ flex: 1 }}>
+									<Image
+										onLongPress={pickImage}
+										resizeMode="contain"
+										alignSelf="center"
+										source={{
+											width: 300,
+											height: 300,
+											uri: image,
+										}}
+									/>
+									<YStack>
+										<Label htmlFor="name">Name</Label>
+										<Controller
+											control={control}
+											rules={{
+												required: true,
+											}}
+											render={({ field: { onChange, onBlur, value } }) => (
+												<Input
+													size="$6"
+													onBlur={onBlur}
+													onChangeText={(text) => {
+														onChange(text);
+														setValue("name", text); // Manually update the value for React Hook Form
+													}}
+													value={value}
+												/>
+											)}
+											name="name"
+											defaultValue={""}
+										/>
+									</YStack>
 
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        maxLength: 100,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input
-                                            size="$6"
-                                            placeholder="App Size in Bytes..."
-                                            onBlur={onBlur}
-                                            onChangeText={(text) => {
-                                                onChange(text);
-                                                setValue('size_bytes', text); // Manually update the value for React Hook Form
-                                            }}
-                                            value={value}
-                                        />
-                                    )}
-                                    name="size_bytes"
-                                    defaultValue={""}
-                                />
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        maxLength: 100,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input
-                                            size="$6"
-                                            placeholder="Price..."
-                                            onBlur={onBlur}
-                                            onChangeText={(text) => {
-                                                onChange(text);
-                                                setValue('price', text); // Manually update the value for React Hook Form
-                                            }}
-                                            value={value}
-                                        />
-                                    )}
-                                    name="price"
-                                    defaultValue={""}
-                                />
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        maxLength: 100,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Select
-                                            id="genre"
-                                            value={value}
-                                            onValueChange={(text) => {
-                                                onChange(text);
-                                                setValue('genre', text); // Manually update the value for React Hook Form
-                                            }}
-                                            disablePreventBodyScroll
-                                            size="$6"
-                                        >
-                                            <Select.Trigger>
-                                                <Select.Value />
-                                            </Select.Trigger>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Input
+												size="$6"
+												placeholder="App Size in Bytes..."
+												onBlur={onBlur}
+												onChangeText={(text) => {
+													onChange(text);
+													setValue("size_bytes", text); // Manually update the value for React Hook Form
+												}}
+												value={value}
+											/>
+										)}
+										name="size_bytes"
+										defaultValue={""}
+									/>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Input
+												size="$6"
+												placeholder="Price..."
+												onBlur={onBlur}
+												onChangeText={(text) => {
+													onChange(text);
+													setValue("price", text); // Manually update the value for React Hook Form
+												}}
+												value={value}
+											/>
+										)}
+										name="price"
+										defaultValue={""}
+									/>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Select
+												id="genre"
+												value={value}
+												onValueChange={(text) => {
+													onChange(text);
+													setValue("genre", text); // Manually update the value for React Hook Form
+												}}
+												disablePreventBodyScroll
+												size="$6"
+											>
+												<Select.Trigger>
+													<Select.Value />
+												</Select.Trigger>
 
-                                            <Adapt when="sm" platform="touch">
-                                                <Sheet
-                                                    snapPointsMode="fit"
-                                                    modal
-                                                    dismissOnSnapToBottom
-                                                    animationConfig={{
-                                                        type: "spring",
-                                                        mass: 1,
-                                                        stiffness: 100,
-                                                        damping: 200,
-                                                    }}
-                                                >
-                                                    <Sheet.Frame>
+												<Adapt when="sm" platform="touch">
+													<Sheet
+														snapPointsMode="fit"
+														modal
+														dismissOnSnapToBottom
+														animationConfig={{
+															type: "spring",
+															mass: 1,
+															stiffness: 100,
+															damping: 200,
+														}}
+													>
+														<Sheet.Frame>
+															<Adapt.Contents />
+														</Sheet.Frame>
+														<Sheet.Overlay
+															animation="lazy"
+															enterStyle={{ opacity: 0 }}
+															exitStyle={{ opacity: 0 }}
+														/>
+													</Sheet>
+												</Adapt>
 
-                                                        <Adapt.Contents />
+												<Select.Content zIndex={200000}>
+													<Select.Viewport minWidth={200}>
+														<Select.Group>
+															<Select.Label>Genre</Select.Label>
+															{useMemo(
+																() =>
+																	items.map((item, i) => {
+																		return (
+																			<Select.Item
+																				index={i}
+																				key={item.name}
+																				value={value}
+																			>
+																				<Select.ItemText>
+																					{item.name}
+																				</Select.ItemText>
+																				<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+																			</Select.Item>
+																		);
+																	}),
+																[items]
+															)}
+														</Select.Group>
+													</Select.Viewport>
+												</Select.Content>
+											</Select>
+										)}
+										name="genre"
+										defaultValue={""}
+									/>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Select
+												id="cont_rating"
+												value={value}
+												onValueChange={(text) => {
+													onChange(text);
+													setValue("cont_rating", text); // Manually update the value for React Hook Form
+												}}
+												disablePreventBodyScroll
+												size="$6"
+											>
+												<Select.Trigger>
+													<Select.Value placeholder="Content Rating" />
+												</Select.Trigger>
 
-                                                    </Sheet.Frame>
-                                                    <Sheet.Overlay
-                                                        animation="lazy"
-                                                        enterStyle={{ opacity: 0 }}
-                                                        exitStyle={{ opacity: 0 }}
-                                                    />
-                                                </Sheet>
-                                            </Adapt>
+												<Adapt when="sm" platform="touch">
+													<Sheet
+														modal
+														snapPointsMode="fit"
+														dismissOnSnapToBottom
+														animationConfig={{
+															type: "spring",
+															mass: 1,
+															stiffness: 100,
+															damping: 200,
+														}}
+													>
+														<Sheet.Frame>
+															<Adapt.Contents />
+														</Sheet.Frame>
+														<Sheet.Overlay
+															animation="lazy"
+															enterStyle={{ opacity: 0 }}
+															exitStyle={{ opacity: 0 }}
+														/>
+													</Sheet>
+												</Adapt>
 
-                                            <Select.Content zIndex={200000}>
-                                                <Select.Viewport minWidth={200}>
-                                                    <Select.Group>
-                                                        <Select.Label>Genre</Select.Label>
-                                                        {useMemo(
-                                                            () =>
-                                                                items.map((item, i) => {
-                                                                    return (
-                                                                        <Select.Item
-                                                                            index={i}
-                                                                            key={item.name}
-                                                                            value={value}
-                                                                        >
-                                                                            <Select.ItemText>
-                                                                                {item.name}
-                                                                            </Select.ItemText>
-                                                                            <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
-                                                                        </Select.Item>
-                                                                    );
-                                                                }),
-                                                            [items]
-                                                        )}
-                                                    </Select.Group>
-                                                </Select.Viewport>
-                                            </Select.Content>
-                                        </Select>
-                                    )}
-                                    name="genre"
-                                    defaultValue={""}
-                                />
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        maxLength: 100,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Select
-                                            id="cont_rating"
-                                            value={value}
-                                            onValueChange={(text) => {
-                                                onChange(text);
-                                                setValue('cont_rating', text); // Manually update the value for React Hook Form
-                                            }}
-                                            disablePreventBodyScroll
-                                            size="$6"
-                                        >
-                                            <Select.Trigger>
-                                                <Select.Value placeholder="Content Rating" />
-                                            </Select.Trigger>
+												<Select.Content zIndex={200000}>
+													<Select.Viewport minWidth={200}>
+														<Select.Group>
+															<Select.Label>Content Rating</Select.Label>
+															<Select.Item index={0} key={"+4"} value={"+4"}>
+																<Select.ItemText>"+4"</Select.ItemText>
+																<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+															</Select.Item>
+															<Select.Item index={1} key={"+18"} value={"+18"}>
+																<Select.ItemText>"+18"</Select.ItemText>
+																<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+															</Select.Item>
+														</Select.Group>
+													</Select.Viewport>
+												</Select.Content>
+											</Select>
+										)}
+										name="cont_rating"
+										defaultValue={""}
+									/>
 
-                                            <Adapt when="sm" platform="touch">
-                                                <Sheet
-                                                    modal
-                                                    snapPointsMode="fit"
-                                                    dismissOnSnapToBottom
-                                                    animationConfig={{
-                                                        type: "spring",
-                                                        mass: 1,
-                                                        stiffness: 100,
-                                                        damping: 200,
-                                                    }}
-                                                >
-                                                    <Sheet.Frame>
+									<Controller
+										control={control}
+										rules={{
+											maxLength: 100,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<Input
+												size="$6"
+												onBlur={onBlur}
+												onChangeText={(text) => {
+													onChange(text);
+													setValue("ver", text); // Manually update the value for React Hook Form
+												}}
+												value={value}
+											/>
+										)}
+										name="ver"
+										defaultValue={""}
+									/>
+									<Controller
+										control={control}
+										rules={{
+											required: true,
+										}}
+										render={({ field: { onChange, onBlur, value } }) => (
+											<TextArea
+												rows={10}
+												size="$4"
+												borderWidth={2}
+												onBlur={onBlur}
+												onChangeText={(text) => {
+													onChange(text);
+													setValue("description", text); // Manually update the value for React Hook Form
+												}}
+												value={value}
+											/>
+										)}
+										name="description"
+										defaultValue={""}
+									/>
 
-                                                        <Adapt.Contents />
-
-                                                    </Sheet.Frame>
-                                                    <Sheet.Overlay
-                                                        animation="lazy"
-                                                        enterStyle={{ opacity: 0 }}
-                                                        exitStyle={{ opacity: 0 }}
-                                                    />
-                                                </Sheet>
-                                            </Adapt>
-
-                                            <Select.Content zIndex={200000}>
-                                                <Select.Viewport minWidth={200}>
-                                                    <Select.Group>
-                                                        <Select.Label>Content Rating</Select.Label>
-                                                        <Select.Item index={0} key={"+4"} value={"+4"}>
-                                                            <Select.ItemText>"+4"</Select.ItemText>
-                                                            <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
-                                                        </Select.Item>
-                                                        <Select.Item index={1} key={"+18"} value={"+18"}>
-                                                            <Select.ItemText>"+18"</Select.ItemText>
-                                                            <Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
-                                                        </Select.Item>
-                                                    </Select.Group>
-                                                </Select.Viewport>
-                                            </Select.Content>
-                                        </Select>
-                                    )}
-                                    name="cont_rating"
-                                    defaultValue={""}
-                                />
-
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        maxLength: 100,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Input
-                                            size="$6"
-                                            onBlur={onBlur}
-                                            onChangeText={(text) => {
-                                                onChange(text);
-                                                setValue('ver', text); // Manually update the value for React Hook Form
-                                            }}
-                                            value={value}
-                                        />
-                                    )}
-                                    name="ver"
-                                    defaultValue={""}
-                                />
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        required: true,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextArea
-                                            rows={10}
-                                            size="$4"
-                                            borderWidth={2}
-                                            onBlur={onBlur}
-                                            onChangeText={(text) => {
-                                                onChange(text);
-                                                setValue('description', text); // Manually update the value for React Hook Form
-                                            }}
-                                            value={value}
-                                        />
-                                    )}
-                                    name="description"
-                                    defaultValue={""}
-                                />
-
-                                <Button
-                                    bc={"$purple10"}
-                                    onPress={handleSubmit(onSubmit)}
-                                    size="$6"
-                                    theme="active"
-                                >
-                                    Update
-                                </Button>
-                            </YStack>
-                        </BlurView>
-                    </ImageBackground>
-                </ScrollView>
-            </SafeAreaView>
-        </>
-    );
+									<Button
+										bc={"$purple10"}
+										onPress={handleSubmit(onSubmit)}
+										size="$6"
+										theme="active"
+									>
+										Update
+									</Button>
+								</YStack>
+							</BlurView>
+						</ImageBackground>
+					</ScrollView>
+				</SafeAreaView>
+			</>
+		);
 }

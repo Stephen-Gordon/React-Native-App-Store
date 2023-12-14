@@ -61,7 +61,7 @@ export default function Page() {
 
 					const response = await axios.get('https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/apps');
 
-					setApps(response.data.reverse());
+					setApps(response.data);
 
 				} catch (error) {
 					console.error('Error:', error);

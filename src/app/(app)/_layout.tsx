@@ -37,7 +37,7 @@ export default function StackLayout() {
 
 							headerShown: true,
 							presentation: "fullScreenModal",
-							animation: "fade",
+							
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {
