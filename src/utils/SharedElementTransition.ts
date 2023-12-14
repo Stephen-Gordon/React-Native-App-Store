@@ -2,6 +2,7 @@ import Animated, {
   SharedTransition,
   withSpring,
   WithSpringConfig,
+  withTiming
 } from 'react-native-reanimated'
  
 const SPRING_CONFIG = {
