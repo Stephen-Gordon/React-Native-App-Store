@@ -3,7 +3,8 @@ import { SessionProvider } from "../contexts/AuthContext";
 import { Button, TamaguiProvider, Theme } from "tamagui";
 import config from "../../tamagui.config";
 import { AntDesign } from '@expo/vector-icons';
-
+import { BlurView } from "expo-blur";
+import { StatusBar } from "react-native";
 export default function TabLayout() {
 	const router = useRouter();
 	return (
@@ -18,18 +19,32 @@ export default function TabLayout() {
 								headerTitleStyle: {
 									fontWeight: "bold",
 								},
-
+								showLabel: false,
+								lazy: true,
+								tabBarStyle: {
+									backgroundColor: "rgba(21,21,21,0.8)",
+									borderTopWidth: 0,
+									borderTopColor: "transparent",
+									borderTopLeftRadius: 20,
+									borderTopRightRadius: 20,
+									position: "absolute",
+									bottom: 0,
+									left: 0,
+									right: 0,
+									height: 80,
+									paddingHorizontal: 20,
+									paddingTop: 10,
+								},
+								headerShown: false,
+								tabBarInactiveBackgroundColor: "rgba(21,21,21,0.8)",
+								tabBarActiveBackgroundColor: "rgba(21,21,21,0.8)",
+								tabBarBackground: () => <BlurView tint="dark" intensity={0} style={{ flex: 1, backgroundColor: "rgba(21,21,21,0.8)" }} />,
 								/* headerBlurEffect: "systemUltraThinMaterial", */
 							}}
-							screenOptions={{
-								headerShown: false,
-								headerTransparent: true,
 
-
-							}}
 						>
-							<Tabs.Screen name="(app)" options={{ headerShown: false, headerTitle: "apps" }} />
-							<Tabs.Screen name="(profile)" options={{ headerShown: false, headerTitle: "profile" }} />
+							{/* <Tabs.Screen name="(app)" options={{ headerShown: false, headerTitle: "apps" }} />
+							<Tabs.Screen name="(profile)" options={{ headerShown: false, headerTitle: "profile" }} /> */}
 
 
 
@@ -37,6 +52,7 @@ export default function TabLayout() {
 
 
 						</Tabs>
+
 					</Theme>
 				</TamaguiProvider>
 
