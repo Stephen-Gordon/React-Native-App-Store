@@ -1,11 +1,22 @@
 import { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+
+//axios
 import axios from "axios";
+
+// animation
 import Animated from "react-native-reanimated";
+
+// types
 import { AppInterface, ReviewInterface } from "../../types";
+
+// animation
 import { sharedElementTransition } from "../../utils/SharedElementTransition";
-import { ScrollView, ImageBackground, Touchable, useWindowDimensions  } from "react-native";
+// react native
+import { ScrollView, ImageBackground, Touchable, useWindowDimensions } from "react-native";
+
+// tamagui
 import {
 	YStack,
 	Text,
@@ -26,7 +37,7 @@ import {
 import { BlurView } from "expo-blur";
 
 //icon
-import { FontAwesome } from "@expo/vector-icons"; 
+import { FontAwesome } from "@expo/vector-icons";
 
 import ReviewsPreview from "../../components/reviews/ReviewsPreview";
 import { Pressable, SafeAreaView } from "react-native";
@@ -40,9 +51,9 @@ export default function Modal() {
 
 	const { id, message, reviewToAdd, image } = useLocalSearchParams();
 	const { width } = useWindowDimensions();
-		const { session } = useSession();
+	const { session } = useSession();
 
-	
+
 	const [app, setApp] = useState<AppInterface | null>(null);
 	const [reviews, setReviews] = useState<ReviewInterface | null>(null);
 	const router = useRouter();
@@ -138,7 +149,7 @@ export default function Modal() {
 								</View>
 								<H2>{app?.name}</H2>
 								<Separator marginVertical={30} />
-								<YStack>
+								<YStack mb="$4">
 									<H3>Reviews</H3>
 									<XStack justifyContent="space-between" alignItems="center">
 										<XStack justifyContent="space-between" alignItems="center">
@@ -151,9 +162,9 @@ export default function Modal() {
 											onPress={() => {
 												session
 													? router.push({
-															pathname: `/reviews/create`,
-															params: { appId: app?._id },
-													  })
+														pathname: `/reviews/create`,
+														params: { appId: app?._id },
+													})
 													: router.push({ pathname: `/login` });
 											}}
 											theme="active"
@@ -168,7 +179,18 @@ export default function Modal() {
 								</YStack>
 
 								<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
-								<Button variant="outlined">
+								<Button
+									//borderColor={"$purple10Dark"}
+									hoverStyle={{
+										scale: 1.2,
+									}}
+									pressStyle={{
+										scale: 0.9,
+									}}
+
+									animation="bouncy"
+									elevation="$4"
+									variant="outlined">
 									<Pressable
 										onPress={() => {
 											handleReviewsPage();
@@ -179,7 +201,7 @@ export default function Modal() {
 								</Button>
 								<Separator marginVertical={15} />
 								<View>
-									<RenderHtml contentWidth={width} source={app?.description} />
+									{/* <RenderHtml contentWidth={width} source={app?.description} /> */}
 								</View>
 							</YStack>
 						</Stack>
