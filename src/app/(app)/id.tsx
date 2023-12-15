@@ -1,6 +1,8 @@
-import { useEffect } from "react";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+// expo
+import { useLocalSearchParams, useRouter, Link } from "expo-router";
+
+// react
+import { useState, useEffect } from "react";
 
 //axios
 import axios from "axios";
@@ -14,7 +16,10 @@ import { AppInterface, ReviewInterface } from "../../types";
 // animation
 import { sharedElementTransition } from "../../utils/SharedElementTransition";
 // react native
-import { ScrollView, ImageBackground, Touchable, useWindowDimensions } from "react-native";
+import { ScrollView, ImageBackground, Touchable, useWindowDimensions, Pressable, SafeAreaView } from "react-native";
+
+//placeholder image
+import { placeholderImage } from "../../utils/placeholder";
 
 // tamagui
 import {
@@ -40,13 +45,15 @@ import { BlurView } from "expo-blur";
 import { FontAwesome } from "@expo/vector-icons";
 
 import ReviewsPreview from "../../components/reviews/ReviewsPreview";
-import { Pressable, SafeAreaView } from "react-native";
-import { useRouter, Link } from "expo-router";
+
 
 // Contexts
 import { useSession } from "../../contexts/AuthContext";
 // html viewer
 import RenderHtml from 'react-native-render-html';
+
+
+
 export default function Modal() {
 
 	const { id, message, reviewToAdd, image } = useLocalSearchParams();
@@ -120,7 +127,9 @@ export default function Modal() {
 					source={{
 						width: 1000,
 						height: 2000,
-						uri: image,
+						uri: app?.image_path
+							? image
+							: placeholderImage,
 					}}
 				>
 					<BlurView intensity={100} tint="dark">
@@ -132,7 +141,9 @@ export default function Modal() {
 								alignSelf="center"
 								style={{ width: "100%", height: 300 }}
 								source={{
-									uri: image,
+									uri: app?.image_path
+										? image
+										: placeholderImage,
 								}}
 							/>
 

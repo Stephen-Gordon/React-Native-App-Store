@@ -1,5 +1,5 @@
 // tamagui
-import { H1, Stack, Text, XStack, Avatar, H3, H2, YStack, Card, Paragraph, Button, H6 } from "tamagui";
+import { H1, Stack, Text, XStack, Avatar, H3, H2, YStack, Card, Paragraph, Button, H6, Separator } from "tamagui";
 //router
 import { useLocalSearchParams, router } from "expo-router";
 // reaact
@@ -17,8 +17,12 @@ import Carousel from "react-native-snap-carousel";
 
 //animated
 import Animated from "react-native-reanimated";
+
 //rating
 import { AirbnbRating } from "react-native-ratings";
+
+// placeholder image
+import { placeholderImage } from "../../../utils/placeholder";
 
 export default function Page() {
 
@@ -158,37 +162,32 @@ export function AppItem({ item, index }: any) {
 			<Pressable
 				onPress={() => {
 					router.push({
-						pathname: `/reviews/id`,
+						pathname: `/id`,
 						params: { id: item._id },
 					});
 				}}
 			>
-				<Card
-					hoverStyle={{
-						scale: 1.2,
-					}}
-					pressStyle={{
-						scale: 0.9,
-					}}
-					animation="bouncy"
-					elevate bordered m="$2" space style={{ height: 200 }}>
-
-					<YStack padding="$4" alignItems="flex-start">
-						<Paragraph theme="alt2">2023</Paragraph>
-						<H2>{item?.name} </H2>
-						<Avatar circular size="$10">
+				<Stack px="$3.5" my="$3.5" alignItems="flex-start">
+					<XStack space="$2" alignItems="center">
+						<Avatar circular size="$4">
 							<Avatar.Image
 								accessibilityLabel="Cam"
-								src={`https://ste-appstore.s3.eu-west-1.amazonaws.com/${item?.image_path}`}
+								src={{
+									uri: item?.image_path
+										? `https://ste-appstore.s3.eu-west-1.amazonaws.com/${item?.image_path}`
+										: placeholderImage,
+								}}
 							/>
 							<Avatar.Fallback backgroundColor="$blue10" />
 						</Avatar>
-
-						<Paragraph mt="$4" theme="alt2">{item.genre}</Paragraph>
-					</YStack>
+						<Text>{item?.name} </Text>
 
 
-				</Card>
+					</XStack>
+
+				</Stack>
+				<Separator marginVertical={15} />
+
 			</Pressable>
 		</Animated.View>
 	);
