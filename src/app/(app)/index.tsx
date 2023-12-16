@@ -155,7 +155,8 @@ export default function Page() {
 					</Stack>
 					<Stack
 						padding={"$4"}
-						bg="$backgroundFocus"
+						style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
+					/* bg="$backgroundFocus" */
 					>
 						<YStack>
 							<H2 style={{ color: colors[item?.genre] }}>{item?.genre}</H2>
@@ -172,10 +173,8 @@ export default function Page() {
 		<>
 			<SafeAreaView>
 				<Stack>
-					{session && <Text> {user?.full_name}</Text>}
-					<Link asChild href="/create">
-						<Button>Create</Button>
-					</Link>
+					{/* {session && <Text> {user?.full_name}</Text>} */}
+
 
 					{renderApps && (
 						<>

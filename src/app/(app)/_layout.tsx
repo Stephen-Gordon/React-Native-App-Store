@@ -3,7 +3,7 @@ import { SessionProvider } from "../../contexts/AuthContext";
 import { Button, TamaguiProvider, Theme } from "tamagui";
 import config from "../../../tamagui.config";
 import { AntDesign } from '@expo/vector-icons';
-
+import { BlurView } from "expo-blur";
 export default function StackLayout() {
 	const router = useRouter();
 	return (
@@ -16,15 +16,43 @@ export default function StackLayout() {
 							fontWeight: "bold",
 						},
 						headerTransparent: true,
+						headerStyle: { backgroundColor: "rgba(21,21,21,0.1)" },
 						/* headerBlurEffect: "systemUltraThinMaterial", */
 					}}
 				>
-					<Stack.Screen name="index" options={{ headerShown: false, headerTitle: "" }} />
+
+					<Stack.Screen name="index" options={{
+						headerTransparent: true,
+						headerShown: true,
+						/* contentStyle: { backgroundColor: "rgba(21,21,21,0.8)" }, */
+						headerStyle: {
+
+							backgroundColor: "rgba(21,21,21,0.1)",
+							position: "absolute",
+							bottom: 0,
+							left: 0,
+							right: 0,
+							height: 80,
+						},
+
+						headerRight: () => (
+							<AntDesign
+								onPress={() => {
+									router.push('/create');
+								}}
+								on
+								name="pluscircle"
+								size={24}
+								color="grey"
+							/>
+						),
+						headerTitle: ""
+
+					}} />
 
 					<Stack.Screen
 						name="login"
 						options={{
-							// Set the presentation mode to modal for our modal route.
 							headerTitle: "Login or Sign Up",
 							presentation: "modal",
 						}}
@@ -32,12 +60,10 @@ export default function StackLayout() {
 					<Stack.Screen
 						name="id"
 						options={{
-							// Set the presentation mode to modal for our modal route.
 							headerTransparent: true,
-
 							headerShown: true,
 							presentation: "fullScreenModal",
-							
+
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {
@@ -55,7 +81,7 @@ export default function StackLayout() {
 						name="create"
 						options={{
 							headerTransparent: true,
-							headerTitle: "Create an App",
+							headerTitle: "",
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {
