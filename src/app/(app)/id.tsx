@@ -21,6 +21,9 @@ import { ScrollView, ImageBackground, Touchable, useWindowDimensions, Pressable,
 //placeholder image
 import { placeholderImage } from "../../utils/placeholder";
 
+import Markdown from 'react-native-markdown-display';
+
+
 // tamagui
 import {
 	YStack,
@@ -63,6 +66,8 @@ export default function Modal() {
 
 	const [app, setApp] = useState<AppInterface | null>(null);
 	const [reviews, setReviews] = useState<ReviewInterface | null>(null);
+	const [html, setHtml] = useState<any | null>(null);
+
 	const router = useRouter();
 
 	useEffect(() => {
@@ -79,6 +84,7 @@ export default function Modal() {
 
 
 		getApp();
+		setHtml(app?.description);
 
 	}, [])
 
@@ -94,7 +100,7 @@ export default function Modal() {
 			}
 		}
 		getReviews();
-	}, [reviewToAdd])
+	}, [reviewToAdd, html])
 
 
 	const handleReviewsPage = () => {
@@ -118,7 +124,7 @@ export default function Modal() {
 		Entertainment: "#orange8Dark",
 		"Photo & Video": "$blue8Dark",
 	};
-
+	const paragraphs = html?.split(/\n\n---\n\n|“/);
 	return (
 		<View>
 			<ScrollView>
@@ -133,7 +139,7 @@ export default function Modal() {
 					}}
 				>
 					<BlurView intensity={100} tint="dark">
-						<Stack style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
+						<Stack style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
 							<Animated.View sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${id}`}>
 								<Animated.Image
 									resizeMode="cover"
@@ -217,8 +223,31 @@ export default function Modal() {
 								<Separator marginVertical={15} />
 								<View>
 									<H3>Description</H3>
-									<Paragraph>{app?.description}</Paragraph>
-									{/* <RenderHtml contentWidth={width} source={app?.description} /> */}
+									{/* <Paragraph>{app?.description}</Paragraph> */}
+
+									{/* <View >
+										{paragraphs?.map((paragraph, index) => (
+											// Filter out empty paragraphs
+											paragraph.trim() !== '' && (
+												<Card space mb="$6" padding="$4" key={index} >
+													<Text>{paragraph}</Text>
+												</Card>
+											)
+										))}
+									</View> */}
+
+									<SafeAreaView>
+										<ScrollView
+											contentInsetAdjustmentBehavior="automatic"
+											style={{ height: '100%' }}
+										>
+											<Markdown style={{
+												paragraph: { color: 'white', fontSize: 16, backgroundColor: 'rgba(21,21,21,0.7)', padding: 20, borderRadius: 20, },
+											}}>
+												{app?.description}
+											</Markdown>
+										</ScrollView>
+									</SafeAreaView>
 								</View>
 							</YStack>
 						</Stack>
