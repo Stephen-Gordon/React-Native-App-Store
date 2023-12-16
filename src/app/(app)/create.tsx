@@ -18,10 +18,11 @@ import { useSession } from "../../contexts/AuthContext";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useMemo } from "react";
-import { Platform } from "react-native";
+import { Platform, Pressable } from "react-native";
 
 //image picker
 import * as ImagePicker from 'expo-image-picker';
+import { placeholderImage } from "../../utils/placeholder";
 
 export default function Page() {
 
@@ -129,8 +130,19 @@ export default function Page() {
 				<ScrollView>
 					<YStack mt="$10" space="$3" padding="$2">
 
-						<Button title="Pick an image from camera roll" onPress={pickImage} />
-						{image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
+						<Pressable
+							onPress={pickImage}
+						>
+
+							<Image
+								source={{
+									width: '100%',
+									height: 300,
+									uri: image ? image : placeholderImage,
+								}}
+							/>
+						</Pressable>
 
 						<Controller
 							control={control}

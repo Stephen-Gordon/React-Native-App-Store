@@ -134,84 +134,90 @@ export default function Modal() {
 				>
 					<BlurView intensity={100} tint="dark">
 						<Stack style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
-							<Animated.Image
-								sharedTransitionStyle={sharedElementTransition}
-								sharedTransitionTag={`${id}`}
-								resizeMode="cover"
-								alignSelf="center"
-								style={{ width: "100%", height: 300 }}
-								source={{
-									uri: app?.image_path
-										? image
-										: placeholderImage,
-								}}
-							/>
+							<Animated.View sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${id}`}>
+								<Animated.Image
+									resizeMode="cover"
+									alignSelf="center"
+									style={{ width: "100%", height: 500 }}
+									source={{
+										uri: app?.image_path
+											? image
+											: placeholderImage,
+									}}
+								/>
+
+								<Stack
+									style={{ backgroundColor: 'rgba(0,0,0,0.7)', position: 'absolute', bottom: 10, width: '90%', alignSelf: 'center', borderRadius: 20 }}
+								>
+									<BlurView style={{ overflow: 'hidden', borderRadius: 20 }} intensity={30}>
+										<YStack padding={"$4"}>
+											<H2 style={{ color: colors[app?.genre] }}>{app?.genre}</H2>
+											<H2>{app?.name}</H2>
+										</YStack>
+									</BlurView>
+								</Stack>
+
+							</Animated.View>
 
 							<YStack padding="$4">
-								<View
-									borderRadius={"$10"}
-									mb="$2"
-									py="$2"
-									px="$4"
-									bg={colors[app?.genre]}
-									style={{ width: "auto", alignSelf: "flex-start" }}
-								>
-									<Text>{app?.genre}</Text>
-								</View>
-								<H2>{app?.name}</H2>
-								<Separator marginVertical={30} />
-								<YStack mb="$4">
-									<H3>Reviews</H3>
-									<XStack justifyContent="space-between" alignItems="center">
-										<XStack justifyContent="space-between" alignItems="center">
-											<FontAwesome name="star" size={24} color="white" />
-											<H3 ml="$2" theme="alt1">
-												{app?.averageRating}
-											</H3>
-										</XStack>
-										<Pressable
-											onPress={() => {
-												session
-													? router.push({
-														pathname: `/reviews/create`,
-														params: { appId: app?._id },
-													})
-													: router.push({ pathname: `/login` });
-											}}
-											theme="active"
-										>
-											<FontAwesome
-												name="pencil-square-o"
-												size={24}
-												color="white"
-											/>
-										</Pressable>
-									</XStack>
+
+
+								<YStack mb="$4" borderRadius={20} style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", overflow: "hidden" }}>
+									<BlurView intensity={30} tint="dark">
+										<Stack padding="$4">
+											<H2>Reviews</H2>
+											<XStack justifyContent="space-between" alignItems="center">
+												<XStack justifyContent="space-between" alignItems="center">
+													<FontAwesome name="star" size={24} color="white" />
+													<H3 ml="$2" theme="alt1">
+														{app?.averageRating}
+													</H3>
+												</XStack>
+												<Pressable
+													onPress={() => {
+														session
+															? router.push({
+																pathname: `/reviews/create`,
+																params: { appId: app?._id },
+															})
+															: router.push({ pathname: `/login` });
+													}}
+													theme="active"
+												>
+													<FontAwesome
+														name="pencil-square-o"
+														size={24}
+														color="white"
+													/>
+												</Pressable>
+											</XStack>
+											<Stack alignItems="flex-start" mb="$4">
+												<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
+											</Stack>
+											<Pressable
+												onPress={() => {
+													handleReviewsPage();
+												}}
+											>
+												<Button
+													//borderColor={"$purple10Dark"}
+
+													elevation="$4"
+													variant="outlined">
+													<H6 color="$purple10Dark">See all</H6>
+
+												</Button>
+											</Pressable>
+										</Stack>
+									</BlurView>
+
 								</YStack>
 
-								<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
-								<Button
-									//borderColor={"$purple10Dark"}
-									hoverStyle={{
-										scale: 1.2,
-									}}
-									pressStyle={{
-										scale: 0.9,
-									}}
 
-									animation="bouncy"
-									elevation="$4"
-									variant="outlined">
-									<Pressable
-										onPress={() => {
-											handleReviewsPage();
-										}}
-									>
-										<H6 color="$purple10Dark">See all</H6>
-									</Pressable>
-								</Button>
 								<Separator marginVertical={15} />
 								<View>
+									<H3>Description</H3>
+									<Paragraph>{app?.description}</Paragraph>
 									{/* <RenderHtml contentWidth={width} source={app?.description} /> */}
 								</View>
 							</YStack>

@@ -171,22 +171,8 @@ export default function Modal() {
 				<H4 mb="$6" theme="alt1" textAlign="center">
 					Out of 5
 				</H4>
-				<Pressable bc={"$purple10"} onPress={() => {
-					session ? router.push({ pathname: `/reviews/create`, params: { appId: "6558d84385951b92da7c8e05" } }) : router.push({ pathname: `/login` })
-				}} size="$6" theme="active">
-					<H3 color={"$purple10Dark"}>Create a Review</H3>
-				</Pressable>
 
-				<Link
-					href={{
-						pathname: "/reviews/create",
-						params: { appId: appId },
-					}}
-					replace
-					asChild
-				>
-					<Button>review</Button>
-				</Link>
+
 				<SafeAreaView>
 					<FlatList data={reviews} renderItem={Item} />
 				</SafeAreaView>

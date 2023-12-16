@@ -1,5 +1,5 @@
 // tamagui
-import { H1, Stack, Text, XStack, Avatar, H3, H2, YStack, Card, Paragraph, Button, H6, Separator, H4 } from "tamagui";
+import { H1, Stack, Text, XStack, Avatar, H3, H2, YStack, Card, Paragraph, Button, H6, Separator, H4, SizableText } from "tamagui";
 //router
 import { useLocalSearchParams, router } from "expo-router";
 // reaact
@@ -105,7 +105,7 @@ export default function Page() {
 				>
 					<Stack px="$3.5" my="$3.5" alignItems="flex-start">
 						<XStack space="$2" alignItems="center">
-							<Avatar circular size="$4">
+							<Avatar size="$5">
 								<Avatar.Image
 									accessibilityLabel="Cam"
 									src={{
@@ -116,7 +116,7 @@ export default function Page() {
 								/>
 								<Avatar.Fallback backgroundColor="$blue10" />
 							</Avatar>
-							<Text>{item?.name} </Text>
+							<SizableText numberOfLines={1} size={"$5"}>{item?.name} </SizableText>
 
 
 						</XStack>

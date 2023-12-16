@@ -1,6 +1,6 @@
 
 // React Native
-import { FlatList, SafeAreaView, Pressable } from "react-native";
+import { FlatList, SafeAreaView, Pressable, Dimensions } from "react-native";
 
 //React
 import { useEffect, useState } from "react";
@@ -51,45 +51,47 @@ export default function ReviewsPreview({ reviews, appId }: ReviewPreviewProps) {
 	const { session } = useSession();
 	const router = useRouter();
 
+	const screenWidth = Dimensions.get('window').width;
 
 
 	const CaroItem = ({ item, index }: any) => {
 		return (
 
-				<Pressable
-					onPress={() => {
-						router.push({
-							pathname: `/reviews/id`,
-							params: { id: item._id },
-						});
-					}}
-				>
-					<Card height={130} padding="$2" elevate bordered my="$2" space>
-							<XStack>
-								<H2>{item.rating}</H2>
-								<AirbnbRating
-									count={5}
-									reviews={item?.rating}
-									defaultRating={item?.rating}
-									size={20}
-								/>
-							</XStack>
-							<Paragraph theme="alt2">{item.content}</Paragraph>
-					</Card>
-				</Pressable>
+			<Pressable
+				onPress={() => {
+					router.push({
+						pathname: `/reviews/id`,
+						params: { id: item._id },
+					});
+				}}
+			>
+				<Card height={200} padding="$2" elevate bordered my="$2" space>
+					<XStack>
+						<H2>{item.rating}</H2>
+						<AirbnbRating
+							count={5}
+							reviews={item?.rating}
+							defaultRating={item?.rating}
+							size={20}
+						/>
+					</XStack>
+					<Paragraph numberOfLines={3} theme="alt2">{item.content}</Paragraph>
+				</Card>
+			</Pressable>
 		);
 	}
 
 
 	return (
 		<>
-			<SafeAreaView style={{ flex: 1 }}>
-				
+			<SafeAreaView style={{ flex: 1, justifyContent: "flex-start" }}>
+
 				<Carousel
-					data={reviews?.slice(0, 3)}
+					inactiveSlideOpacity={0.5}
+					data={reviews?.slice(0, 3).reverse()}
 					renderItem={CaroItem}
-					sliderWidth={400} // Make sure sliderWidth and itemWidth are defined
-					itemWidth={300}
+					sliderWidth={screenWidth - 75}
+					itemWidth={screenWidth - 125}
 				/>
 
 			</SafeAreaView>

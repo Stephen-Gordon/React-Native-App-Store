@@ -1,5 +1,5 @@
 // tamagui
-import { TamaguiProvider, ScrollView, YStack, View, Stack, Button, Text, Card, H2, Paragraph, XStack } from "tamagui";
+import { TamaguiProvider, ScrollView, YStack, Stack, Button, Text, Card, H2, Paragraph, XStack } from "tamagui";
 
 //react
 import { useEffect, useCallback, useState } from "react";
@@ -11,7 +11,7 @@ import { useRouter, Link } from "expo-router";
 import { useSession } from "../../contexts/AuthContext";
 
 // react native 
-import { StyleSheet, SafeAreaView, FlatList, ActionSheetIOS, Pressable } from "react-native";
+import { StyleSheet, SafeAreaView, FlatList, ActionSheetIOS, Pressable, View } from "react-native";
 import { useFonts } from "expo-font";
 
 //axios
@@ -31,6 +31,7 @@ interface AppProps {
 import { sharedElementTransition } from "../../utils/SharedElementTransition";
 import { AppInterface } from "../../types";
 import { placeholderImage } from "../../utils/placeholder";
+import { BlurView } from "expo-blur";
 export default function Page() {
 	const [renderApps, setRenderApps] = useState(false);
 	const [apps, setApps] = useState([]);
@@ -138,13 +139,15 @@ export default function Page() {
 					});
 				}}
 			>
-				<Card bordered m="$2" style={{ height: "auto", }}>
-					<Stack>
+				<Card
+
+					animation="bouncy"
+					bordered
+					style={{ height: "auto", overflow: 'hidden' }}>
+					<Animated.View sharedTransitionStyle={sharedElementTransition} sharedTransitionTag={`${item._id}`}>
 						<Animated.Image
-							sharedTransitionStyle={sharedElementTransition}
-							sharedTransitionTag={`${item._id}`}
 							resizeMode="cover"
-							style={{ width: "100%", height: 300, }}
+							style={{ width: "100%", height: 500, }}
 							alignSelf="center"
 							source={{
 								uri: item?.image_path
@@ -152,17 +155,22 @@ export default function Page() {
 									: placeholderImage,
 							}}
 						/>
-					</Stack>
-					<Stack
-						padding={"$4"}
-						style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
-					/* bg="$backgroundFocus" */
-					>
-						<YStack>
-							<H2 style={{ color: colors[item?.genre] }}>{item?.genre}</H2>
-							<H2>{item.name}</H2>
-						</YStack>
-					</Stack>
+
+						<Stack
+							style={{ backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', zIndex: '1000', bottom: 10, width: '90%%', alignSelf: 'center', borderRadius: 20 }}
+						>
+							<BlurView style={{ overflow: 'hidden', borderRadius: 20 }} tint="dark" intensity={30}>
+								<YStack padding={"$4"}>
+									<H2 style={{ color: colors[item?.genre] }}>{item?.genre}</H2>
+									<H2>{item.name}</H2>
+								</YStack>
+							</BlurView>
+						</Stack>
+
+
+
+					</Animated.View>
+
 				</Card>
 			</Pressable>
 		);
@@ -172,13 +180,13 @@ export default function Page() {
 	return (
 		<>
 			<SafeAreaView>
-				<Stack>
+				<Stack padding="$2">
 					{/* {session && <Text> {user?.full_name}</Text>} */}
 
 
 					{renderApps && (
 						<>
-							<FlatList data={apps} renderItem={Item} />
+							<FlatList contentContainerStyle={{ gap: 20 }} data={apps} renderItem={Item} />
 						</>
 					)}
 				</Stack>

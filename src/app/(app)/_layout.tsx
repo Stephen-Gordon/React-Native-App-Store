@@ -63,7 +63,7 @@ export default function StackLayout() {
 							headerTransparent: true,
 							headerShown: true,
 							presentation: "fullScreenModal",
-
+							headerTitle: "",
 							headerLeft: () => (
 								<AntDesign
 									onPress={() => {
@@ -158,19 +158,8 @@ export default function StackLayout() {
 						name="reviews/all"
 						options={{
 							// Set the presentation mode to modal for our modal route.
-							headerTitle: "Reviews",
+							headerTitle: "",
 							presentation: "modal",
-							headerLeft: () => (
-								<AntDesign
-									onPress={() => {
-										router.back();
-									}}
-									on
-									name="closecircleo"
-									size={24}
-									color="grey"
-								/>
-							),
 						}}
 					/>
 
