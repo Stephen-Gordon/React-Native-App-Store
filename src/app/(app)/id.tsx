@@ -200,20 +200,21 @@ export default function Modal() {
 											<Stack alignItems="flex-start" mb="$4">
 												<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
 											</Stack>
-											<Pressable
+
+											<Button
 												onPress={() => {
 													handleReviewsPage();
 												}}
-											>
-												<Button
-													//borderColor={"$purple10Dark"}
+												//borderColor={"$purple10Dark"}
+												width={"100%"}
+												elevation="$4"
+												color="$purple10Dark"
+												backgroundColor={"$purple10Dark"}
+												variant="outlined">
+												<H6 color="$purple10Dark">See all</H6>
 
-													elevation="$4"
-													variant="outlined">
-													<H6 color="$purple10Dark">See all</H6>
+											</Button>
 
-												</Button>
-											</Pressable>
 										</Stack>
 									</BlurView>
 
@@ -223,18 +224,7 @@ export default function Modal() {
 								<Separator marginVertical={15} />
 								<View>
 									<H3>Description</H3>
-									{/* <Paragraph>{app?.description}</Paragraph> */}
 
-									{/* <View >
-										{paragraphs?.map((paragraph, index) => (
-											// Filter out empty paragraphs
-											paragraph.trim() !== '' && (
-												<Card space mb="$6" padding="$4" key={index} >
-													<Text>{paragraph}</Text>
-												</Card>
-											)
-										))}
-									</View> */}
 
 									<SafeAreaView>
 										<ScrollView

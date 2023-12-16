@@ -5,6 +5,7 @@ import config from "../../tamagui.config";
 import { AntDesign } from '@expo/vector-icons';
 import { BlurView } from "expo-blur";
 import { StatusBar } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 export default function TabLayout() {
 	const router = useRouter();
 	return (
@@ -38,13 +39,21 @@ export default function TabLayout() {
 							}}
 
 						>
-							{/* <Tabs.Screen name="(app)" options={{ headerShown: false, headerTitle: "apps" }} />
-							<Tabs.Screen name="(profile)" options={{ headerShown: false, headerTitle: "profile" }} /> */}
-
-
-
-
-
+							<Tabs.Screen name="(app)" options={{
+								headerShown: false, headerTitle: "apps", tabBarLabel: "Apps", tabBarShowLabel: false, tabBarIcon: () => (
+									<AntDesign
+										on
+										name="home"
+										size={24}
+										color="#bf7af0"
+									/>
+								),
+							}} />
+							<Tabs.Screen name="(profile)/profile" options={{
+								headerShown: false, headerTitle: "apps", tabBarLabel: "Apps", tabBarShowLabel: false, tabBarIcon: () => (
+									<Ionicons name="person" size={24} color="#bf7af0" />
+								),
+							}} />
 
 						</Tabs>
 

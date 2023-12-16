@@ -1,5 +1,5 @@
 // tamagui
-import { TamaguiProvider, ScrollView, YStack, Stack, Button, Text, Card, H2, Paragraph, XStack } from "tamagui";
+import { TamaguiProvider, ScrollView, YStack, Stack, Button, Text, Card, H2, Paragraph, XStack, H4 } from "tamagui";
 
 //react
 import { useEffect, useCallback, useState } from "react";
@@ -161,7 +161,7 @@ export default function Page() {
 						>
 							<BlurView style={{ overflow: 'hidden', borderRadius: 20 }} tint="dark" intensity={30}>
 								<YStack padding={"$4"}>
-									<H2 style={{ color: colors[item?.genre] }}>{item?.genre}</H2>
+									<H4 style={{ color: colors[item?.genre] }}>{item?.genre}</H4>
 									<H2>{item.name}</H2>
 								</YStack>
 							</BlurView>
