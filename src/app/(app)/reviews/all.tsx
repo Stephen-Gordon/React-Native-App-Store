@@ -123,44 +123,48 @@ export default function Modal() {
 				exiting={FadeOut}
 				layout={Layout.delay(100)}
 			>
-				<Pressable
+
+				<Stack
+					pressStyle={{
+						scale: 0.9,
+					}}
 					onLongPress={() => handlePress(item._id, item.user._id)}
-				>
-					<Stack px="$3.5" my="$3.5" alignItems="flex-start">
-						<XStack space="$2" alignItems="center">
-							<Avatar circular size="$3" backgroundColor="$color.gray7Dark" >
+					animation={"bouncy"}
+					px="$3.5" my="$3.5" alignItems="flex-start">
+					<XStack space="$2" alignItems="center">
+						<Avatar circular size="$3" backgroundColor="$color.gray7Dark" >
 
-							</Avatar>
+						</Avatar>
 
-							{item.user._id == user._id ? (
-								<Text color="$purple10Dark" theme="alt1">{item.user.full_name}</Text>
-							) : (
-								<Text theme="alt1">{item.user.full_name}</Text>
-							)}
-
-						</XStack>
-						<XStack my="$2" >
-							<AirbnbRating
-
-								count={5}
-								defaultRating={item.rating}
-								size={16}
-								showRating={false}
-
-							/>
-						</XStack>
-
-						<Paragraph >{item.content}</Paragraph>
-						{item.user._id == user._id || item.user.role == 'admin' && (
-							<Button bc="$red10Dark">Delete</Button>
+						{item.user._id == user._id ? (
+							<Text color="$purple10Dark" theme="alt1">{item.user.full_name}</Text>
+						) : (
+							<Text theme="alt1">{item.user.full_name}</Text>
 						)}
 
-					</Stack>
-				</Pressable>
+					</XStack>
+					<XStack my="$2" >
+						<AirbnbRating
+
+							count={5}
+							defaultRating={item.rating}
+							size={16}
+							showRating={false}
+
+						/>
+					</XStack>
+
+					<Paragraph >{item.content}</Paragraph>
+					{console.log(item.user._id, user)}
+					{item.user._id == user._id || user.role == 'admin' && (
+						<Button bc="$red10Dark">Delete</Button>
+					)}
+
+				</Stack>
+
 			</Animated.View>
 		)
 	}
-	let appId = "6558d84385951b92da7c8e05"
 
 	return (
 		<>

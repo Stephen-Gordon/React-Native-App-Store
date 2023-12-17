@@ -59,8 +59,7 @@ import RenderHtml from 'react-native-render-html';
 
 export default function Modal() {
 
-	const { id, message, reviewToAdd, image } = useLocalSearchParams();
-	const { width } = useWindowDimensions();
+	const { id, reviewToAdd } = useLocalSearchParams();
 	const { session } = useSession();
 
 
@@ -108,7 +107,6 @@ export default function Modal() {
 		if (!session) {
 			router.push("/login");
 		} else {
-			console.log("handleReviewsPage");
 			router.push({
 				pathname: `/reviews/all`,
 				params: { id: id },
@@ -165,55 +163,60 @@ export default function Modal() {
 
 							</Animated.View>
 
-							<YStack padding="$4">
+							<YStack >
 
 
-								<YStack mb="$4" borderRadius={20} style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", overflow: "hidden" }}>
+								<YStack mb="$4" >
 									<BlurView intensity={30} tint="dark">
-										<Stack padding="$4">
-											<H2>Reviews</H2>
-											<XStack justifyContent="space-between" alignItems="center">
+										<Stack >
+											<Stack padding="$4">
+												<H2>Reviews</H2>
 												<XStack justifyContent="space-between" alignItems="center">
-													<FontAwesome name="star" size={24} color="white" />
-													<H3 ml="$2" theme="alt1">
-														{app?.averageRating}
-													</H3>
+													<XStack justifyContent="space-between" alignItems="center">
+														<FontAwesome name="star" size={24} color="white" />
+														<H3 ml="$2" theme="alt1">
+															{app?.averageRating}
+														</H3>
+													</XStack>
+													<Pressable
+														onPress={() => {
+															session
+																? router.push({
+																	pathname: `/reviews/create`,
+																	params: { appId: app?._id },
+																})
+																: router.push({ pathname: `/login` });
+														}}
+														theme="active"
+													>
+														<FontAwesome
+															name="pencil-square-o"
+															size={24}
+															color="white"
+														/>
+													</Pressable>
 												</XStack>
-												<Pressable
-													onPress={() => {
-														session
-															? router.push({
-																pathname: `/reviews/create`,
-																params: { appId: app?._id },
-															})
-															: router.push({ pathname: `/login` });
-													}}
-													theme="active"
-												>
-													<FontAwesome
-														name="pencil-square-o"
-														size={24}
-														color="white"
-													/>
-												</Pressable>
-											</XStack>
+											</Stack>
 											<Stack alignItems="flex-start" mb="$4">
 												<ReviewsPreview reviews={reviews} setApp={setApp} appId={id} />
 											</Stack>
 
-											<Button
-												onPress={() => {
-													handleReviewsPage();
-												}}
-												//borderColor={"$purple10Dark"}
-												width={"100%"}
-												elevation="$4"
-												color="$purple10Dark"
-												backgroundColor={"$purple10Dark"}
-												variant="outlined">
-												<H6 color="$purple10Dark">See all</H6>
+											<Stack padding="$4">
+												<Button
+													onPress={() => {
+														handleReviewsPage();
+													}}
 
-											</Button>
+													//borderColor={"$purple10Dark"}
+													width={"100%"}
+													elevation="$4"
+
+													backgroundColor={"$purple10Dark"}
+													variant="outlined">
+													See All Reviews
+
+												</Button>
+											</Stack>
 
 										</Stack>
 									</BlurView>
@@ -222,7 +225,7 @@ export default function Modal() {
 
 
 								<Separator marginVertical={15} />
-								<View>
+								<View padding="$4">
 									<H3>Description</H3>
 
 
@@ -232,7 +235,7 @@ export default function Modal() {
 											style={{ height: '100%' }}
 										>
 											<Markdown style={{
-												paragraph: { color: 'white', fontSize: 16, backgroundColor: 'rgba(21,21,21,0.7)', padding: 20, borderRadius: 20, },
+												paragraph: { color: 'white', fontSize: 16, backgroundColor: 'rgba(21,21,21,0.7)', padding: 20, borderRadius: 20, lineHeight: 25 },
 											}}>
 												{app?.description}
 											</Markdown>

@@ -8,6 +8,7 @@ import { StatusBar } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 export default function TabLayout() {
 	const router = useRouter();
+
 	return (
 		<>
 			<SessionProvider>
@@ -16,12 +17,10 @@ export default function TabLayout() {
 					<Theme name="dark">
 						<Tabs
 							screenOptions={{
-								contentStyle: { backgroundColor: "#151515" },
 								headerTitleStyle: {
 									fontWeight: "bold",
 								},
-								showLabel: false,
-								lazy: true,
+
 								tabBarStyle: {
 									backgroundColor: "rgba(21,21,21,0.8)",
 									borderTopColor: "transparent",
@@ -35,7 +34,6 @@ export default function TabLayout() {
 								tabBarInactiveBackgroundColor: "rgba(21,21,21,0.8)",
 								tabBarActiveBackgroundColor: "rgba(21,21,21,0.8)",
 								tabBarBackground: () => <BlurView tint="dark" intensity={0} style={{ flex: 1, backgroundColor: "rgba(21,21,21,0.8)" }} />,
-								/* headerBlurEffect: "systemUltraThinMaterial", */
 							}}
 
 						>

@@ -422,6 +422,8 @@ export default function Page() {
 									bc={"$purple10"}
 									onPress={handleSubmit(onSubmit)}
 									size="$6"
+									mb="$8"
+
 									theme="active"
 								>
 									Update

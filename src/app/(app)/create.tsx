@@ -160,6 +160,8 @@ export default function Page() {
 							)}
 							name="name"
 						/>
+						{errors.name && <Text color={"$red10Dark"}>This is required.</Text>}
+
 
 						<Controller
 							control={control}
@@ -217,6 +219,7 @@ export default function Page() {
 										<Sheet
 											modal
 											dismissOnSnapToBottom
+											snapPointsMode="fit"
 											animationConfig={{
 												type: "spring",
 												mass: 1,
@@ -290,6 +293,7 @@ export default function Page() {
 										<Sheet
 											modal
 											dismissOnSnapToBottom
+											snapPointsMode="fit"
 											animationConfig={{
 												type: "spring",
 												mass: 1,

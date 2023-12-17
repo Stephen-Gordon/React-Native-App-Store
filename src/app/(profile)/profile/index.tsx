@@ -28,7 +28,7 @@ import { handleDelete } from "../../../utils/handleDelete";
 export default function Page() {
 
 	//hooks
-	const { session, getUser } = useSession();
+	const { session, getUser, signOut } = useSession();
 	const userInStorage = getUser();
 
 	const screenWidth = Dimensions.get('window').width;
@@ -37,21 +37,26 @@ export default function Page() {
 	const [user, setUser] = useState<any | null>(null);
 
 	useEffect(() => {
-		const getApp = async () => {
-			try {
 
-				/* const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/${userInStorage?._id}`); */
-				const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/655a39b1d03f57b2084e3fdf`);
-				setUser(response.data);
-				console.log(user)
+		if (!userInStorage) {
+			router.push({ pathname: `/login` })
+		} else {
+			const getApp = async () => {
+				try {
+
+					//const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/${userInStorage?._id}`);
+					const response = await axios.get(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/655a39b1d03f57b2084e3fdf`);
+					setUser(response.data);
+
+				} catch (error) {
+					console.error('Error:', error);
+				}
+			};
+
+			getApp();
+		}
 
 
-			} catch (error) {
-				console.error('Error:', error);
-			}
-		};
-
-		getApp();
 
 	}, [])
 
@@ -129,68 +134,85 @@ export default function Page() {
 		);
 	}
 
+	const deleteAccount = async () => {
+		try {
+			const response = await axios.delete(`https://express-app-store-api-6f6c8ec32640.herokuapp.com/api/users/${userInStorage?._id}`);
+			signOut();
+			router.push({ pathname: `/login` });
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	}
 
 	return (
 		<>
 			<SafeAreaView >
 				<ScrollView>
-					{!user ? (
+					{!userInStorage ? (
+
 						<>
-							<Text>Please Login</Text>
-							{router.push({ pathname: `/login` })}
+							<Stack padding="$4">
+								<H2>Please Login</H2>
+								<Button
+									mt="$4"
+									bc={"$purple10"}
+									onPress={() => {
+										router.push({ pathname: `/login` });
+									}}
+									size="$6"
+									theme="active"
+								>
+									Sign in
+								</Button>
+							</Stack>
+
 						</>
 					) : (
-						<Stack >
-							<Stack space padding="$4" >
-								<H1>Profile</H1>
-								<XStack space="$2" alignItems="center">
-									<Avatar circular size="$6" backgroundColor="$color.gray7Dark" >
+						<>
+							<Stack >
+								<Stack space padding="$4" >
+									<H1>Profile</H1>
+									<XStack space="$2" alignItems="center">
+										<Avatar circular size="$6" backgroundColor="$color.gray7Dark" >
 
-									</Avatar>
-									<YStack space="$1">
-										<H3>{user?.full_name}</H3>
-										<Text theme="alt1">Joined in 2023</Text>
-									</YStack>
+										</Avatar>
+										<YStack space="$1">
+											<H3>{user?.full_name}</H3>
+											<Text theme="alt1">Joined in 2023</Text>
+										</YStack>
 
 
-								</XStack>
-								<H2 theme="alt1">Recent Reviews</H2>
-							</Stack>
-							<Carousel
-								inactiveSlideOpacity={0.5}
-								data={user?.reviews}
-								renderItem={ReviewItem}
-								sliderWidth={screenWidth}
-								itemWidth={screenWidth - 30}
-							/>
-							<Stack space padding="$4">
-								<Button
-									//borderColor={"$purple10Dark"}
-									hoverStyle={{
-										scale: 1.2,
-									}}
-									pressStyle={{
-										scale: 0.9,
-									}}
-									animation="bouncy"
-									elevation="$4"
-									variant="outlined">
-									<Pressable
-										onPress={() => {
-											handleReviewsPage();
-										}}
-									>
-										<H6 color="$purple10Dark">See all</H6>
-									</Pressable>
-								</Button>
-								<YStack>
+									</XStack>
+									<H2 theme="alt1">Recent Reviews</H2>
+								</Stack>
+								<Carousel
+									inactiveSlideOpacity={0.5}
+									data={user?.reviews}
+									renderItem={ReviewItem}
+									sliderWidth={screenWidth}
+									itemWidth={screenWidth - 30}
+								/>
+								<Stack space padding="$4">
 									<H2 theme="alt1">Apps Downloaded</H2>
 									<FlatList data={user?.appsDownloaded} renderItem={AppItem} />
-								</YStack>
-							</Stack>
-						</Stack >
+
+								</Stack>
+							</Stack >
+							<YStack padding="$4">
+								<Button onPress={() => {
+									signOut();
+									router.push({ pathname: `/login` });
+									console.log(userInStorage)
+								}}>Sign Out</Button>
+							</YStack>
+							<YStack padding="$4">
+								<Button onPress={deleteAccount}>Delete Account </Button>
+							</YStack>
+						</>
+
 					)
 					}
+
 				</ScrollView >
 			</SafeAreaView >
 		</>
@@ -199,7 +221,6 @@ export default function Page() {
 
 
 export function ReviewItem({ item, index }: any) {
-
 
 	return (
 		<Animated.View>
@@ -232,7 +253,9 @@ export function ReviewItem({ item, index }: any) {
 							size={20}
 						/>
 						<Paragraph numberOfLines={3} mt="$4" theme="alt2">{item.content}</Paragraph>
+
 					</YStack>
+
 
 
 				</Card>

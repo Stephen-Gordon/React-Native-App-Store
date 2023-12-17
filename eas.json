@@ -3,14 +3,13 @@
     "version": ">= 5.9.2"
   },
   "build": {
-    "development": {
+    "development-simulator": {
       "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
+    }
   },
   "submit": {
     "production": {}

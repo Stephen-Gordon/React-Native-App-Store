@@ -1,11 +1,33 @@
 import { Stack, useRouter } from "expo-router";
-import { SessionProvider } from "../../contexts/AuthContext";
+import { SessionProvider, useSession } from "../../contexts/AuthContext";
 import { Button, TamaguiProvider, Theme } from "tamagui";
-import config from "../../../tamagui.config";
 import { AntDesign } from '@expo/vector-icons';
 import { BlurView } from "expo-blur";
 export default function StackLayout() {
+
 	const router = useRouter();
+
+	const { session } = useSession();
+
+	const CreateHeader = () => {
+		return (
+			session && (
+				<>
+					<AntDesign
+						onPress={() => {
+							router.push('/create');
+						}}
+						on
+						name="pluscircle"
+						size={24}
+						color="grey"
+					/>
+				</>
+			)
+		)
+
+	}
+
 	return (
 		<>
 			<SessionProvider>
@@ -14,17 +36,16 @@ export default function StackLayout() {
 						contentStyle: { backgroundColor: "#151515" },
 						headerTitleStyle: {
 							fontWeight: "bold",
+							color: "grey",
 						},
 						headerTransparent: true,
 						headerStyle: { backgroundColor: "rgba(21,21,21,0.1)" },
-						/* headerBlurEffect: "systemUltraThinMaterial", */
 					}}
 				>
 
 					<Stack.Screen name="index" options={{
 						headerTransparent: true,
 						headerShown: true,
-						/* contentStyle: { backgroundColor: "rgba(21,21,21,0.8)" }, */
 						headerStyle: {
 
 							backgroundColor: "rgba(21,21,21,0.1)",
@@ -36,15 +57,7 @@ export default function StackLayout() {
 						},
 
 						headerRight: () => (
-							<AntDesign
-								onPress={() => {
-									router.push('/create');
-								}}
-								on
-								name="pluscircle"
-								size={24}
-								color="grey"
-							/>
+							<CreateHeader />
 						),
 						headerTitle: ""
 
@@ -53,7 +66,7 @@ export default function StackLayout() {
 					<Stack.Screen
 						name="login"
 						options={{
-							headerTitle: "Login or Sign Up",
+							headerTitle: "",
 							presentation: "modal",
 						}}
 					/>
@@ -95,30 +108,10 @@ export default function StackLayout() {
 							),
 						}}
 					/>
-					{/* <Stack.Screen
-						name="review"
-						options={{
-							// Set the presentation mode to modal for our modal route.
-							headerTitle: "Reviews",
-							presentation: "fullScreenModal",
-							animation: "fade",
-							headerLeft: () => (
-								<AntDesign
-									onPress={() => {
-										router.back();
-									}}
-									on
-									name="closecircleo"
-									size={24}
-									color="grey"
-								/>
-							),
-						}}
-					/> */}
+
 					<Stack.Screen
 						name="reviews/create"
 						options={{
-							// Set the presentation mode to modal for our modal route.
 							headerTitle: "Write Your Review",
 							presentation: "modal",
 							headerLeft: () => (
@@ -137,7 +130,6 @@ export default function StackLayout() {
 					<Stack.Screen
 						name="reviews/edit"
 						options={{
-							// Set the presentation mode to modal for our modal route.
 							headerTitle: "Reviews",
 							presentation: "fullScreenModal",
 							animation: "fade",
@@ -157,7 +149,6 @@ export default function StackLayout() {
 					<Stack.Screen
 						name="reviews/all"
 						options={{
-							// Set the presentation mode to modal for our modal route.
 							headerTitle: "",
 							presentation: "modal",
 						}}

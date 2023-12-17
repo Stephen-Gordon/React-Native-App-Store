@@ -1,5 +1,5 @@
 // tamagui
-import { TamaguiProvider, ScrollView, YStack, Stack, Button, Text, Card, H2, Paragraph, XStack, H4 } from "tamagui";
+import { TamaguiProvider, ScrollView, YStack, Stack, Button, Text, Card, H2, Paragraph, XStack, H4, Select, Adapt } from "tamagui";
 
 //react
 import { useEffect, useCallback, useState } from "react";
@@ -127,7 +127,7 @@ export default function Page() {
 	}
 
 	const Item = ({ item }: AppProps) => {
-		let image = `https://ste-appstore.s3.eu-west-1.amazonaws.com/${item?.image_path}`
+
 
 		return (
 			<Pressable
@@ -135,7 +135,7 @@ export default function Page() {
 				onPress={() => {
 					router.push({
 						pathname: `/id`,
-						params: { id: item._id, image: image },
+						params: { id: item._id },
 					});
 				}}
 			>
@@ -151,7 +151,7 @@ export default function Page() {
 							alignSelf="center"
 							source={{
 								uri: item?.image_path
-									? image
+									? `https://ste-appstore.s3.eu-west-1.amazonaws.com/${item?.image_path}`
 									: placeholderImage,
 							}}
 						/>
@@ -193,4 +193,77 @@ export default function Page() {
 			</SafeAreaView>
 		</>
 	);
+}
+
+
+export function SelectMenu() {
+	return (
+		<>
+			<Select
+				id="genre"
+				value={val}
+				onValueChange={(val) => {
+					setVal(val);
+					onChange(val);
+				}}
+				disablePreventBodyScroll
+				size="$6"
+			>
+				<Select.Trigger>
+					<Select.Value placeholder="Something" />
+				</Select.Trigger>
+
+				<Adapt when="sm" platform="touch">
+					<Sheet
+						modal
+						dismissOnSnapToBottom
+						snapPointsMode="fit"
+						animationConfig={{
+							type: "spring",
+							mass: 1,
+							stiffness: 100,
+							damping: 200,
+						}}
+					>
+						<Sheet.Frame>
+							<Sheet.ScrollView>
+								<Adapt.Contents />
+							</Sheet.ScrollView>
+						</Sheet.Frame>
+						<Sheet.Overlay
+							animation="lazy"
+							enterStyle={{ opacity: 0 }}
+							exitStyle={{ opacity: 0 }}
+						/>
+					</Sheet>
+				</Adapt>
+
+				<Select.Content zIndex={200000}>
+					<Select.Viewport minWidth={200}>
+						<Select.Group>
+							<Select.Label>Genre</Select.Label>
+							{useMemo(
+								() =>
+									items.map((item, i) => {
+										return (
+											<Select.Item
+												index={i}
+												key={item.name}
+												value={item.name}
+											>
+												<Select.ItemText>
+													{item.name}
+												</Select.ItemText>
+												<Select.ItemIndicator marginLeft="auto"></Select.ItemIndicator>
+											</Select.Item>
+										);
+									}),
+								[items]
+							)}
+						</Select.Group>
+					</Select.Viewport>
+				</Select.Content>
+			</Select>
+		</>
+	)
 }

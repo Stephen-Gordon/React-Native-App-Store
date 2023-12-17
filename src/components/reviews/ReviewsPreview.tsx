@@ -6,7 +6,7 @@ import { FlatList, SafeAreaView, Pressable, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 
 //Tamagui
-import { Button, Card, H2, H3, Paragraph, Text, View, XStack } from "tamagui";
+import { Button, Card, H2, H3, Paragraph, Text, View, XStack, YStack } from "tamagui";
 
 //Animated
 import Animated from "react-native-reanimated";
@@ -65,16 +65,18 @@ export default function ReviewsPreview({ reviews, appId }: ReviewPreviewProps) {
 					});
 				}}
 			>
-				<Card height={200} padding="$2" elevate bordered my="$2" space>
-					<XStack>
-						<H2>{item.rating}</H2>
-						<AirbnbRating
-							count={5}
-							reviews={item?.rating}
-							defaultRating={item?.rating}
-							size={20}
-						/>
-					</XStack>
+				<Card height={200} padding="$4" bordered my="$2" bg="$backgroundStrong" space alignItems="flex-start">
+
+					<Paragraph numberOfLines={3} theme="alt2">{item.user.full_name}</Paragraph>
+					<AirbnbRating
+						count={5}
+						reviews={item?.rating}
+						defaultRating={item?.rating}
+						size={20}
+						showRating={false}
+
+					/>
+
 					<Paragraph numberOfLines={3} theme="alt2">{item.content}</Paragraph>
 				</Card>
 			</Pressable>
@@ -90,8 +92,8 @@ export default function ReviewsPreview({ reviews, appId }: ReviewPreviewProps) {
 					inactiveSlideOpacity={0.5}
 					data={reviews?.slice(0, 3).reverse()}
 					renderItem={CaroItem}
-					sliderWidth={screenWidth - 75}
-					itemWidth={screenWidth - 125}
+					sliderWidth={screenWidth}
+					itemWidth={screenWidth - 60}
 				/>
 
 			</SafeAreaView>
