@@ -124,7 +124,7 @@ export default function Modal() {
 		Entertainment: "#orange8Dark",
 		"Photo & Video": "$blue8Dark",
 	};
-	const paragraphs = html?.split(/\n\n---\n\n|“/);
+
 	return (
 		<View>
 			<ScrollView>
@@ -134,7 +134,7 @@ export default function Modal() {
 						width: 1000,
 						height: 2000,
 						uri: app?.image_path
-							? image
+							? `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`
 							: placeholderImage,
 					}}
 				>
@@ -147,7 +147,7 @@ export default function Modal() {
 									style={{ width: "100%", height: 500 }}
 									source={{
 										uri: app?.image_path
-											? image
+											? `https://ste-appstore.s3.eu-west-1.amazonaws.com/${app?.image_path}`
 											: placeholderImage,
 									}}
 								/>
