@@ -40,6 +40,7 @@ export default function TabLayout() {
 
 						>
 							<Tabs.Screen name="(app)" options={{
+								tabBarInactiveBackgroundColor: "rgba(21,21,21,0.6)",
 								headerShown: false, headerTitle: "apps", tabBarLabel: "Apps", tabBarShowLabel: false, tabBarIcon: () => (
 									<AntDesign
 										on
@@ -48,6 +49,7 @@ export default function TabLayout() {
 										color="#bf7af0"
 									/>
 								),
+
 							}} />
 							<Tabs.Screen name="(profile)/profile" options={{
 								headerShown: false, headerTitle: "apps", tabBarLabel: "Apps", tabBarShowLabel: false, tabBarIcon: () => (

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "app-store",
-    "slug": "app-store",
+    "slug": "appstore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -16,13 +16,17 @@
     ],
     "scheme": "your-app-scheme",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.stegordon.appstore"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#151515"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -36,6 +40,15 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "289529f6-0bbf-4574-8aec-47a9616d0945"
+      }
+    },
+    "owner": "stegordon"
   }
 }

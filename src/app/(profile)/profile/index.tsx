@@ -137,6 +137,7 @@ export default function Page() {
 					{!user ? (
 						<>
 							<Text>Please Login</Text>
+							{router.push({ pathname: `/login` })}
 						</>
 					) : (
 						<Stack >
