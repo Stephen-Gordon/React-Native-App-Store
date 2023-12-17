@@ -2,7 +2,15 @@
 
 A react native IOS app. Built on top of [my Express API](https://github.com/Stephen-Gordon/App-Store-Express-API). 
 Users can sign up to the app store, browse apps and review them. Admins can create, update and delete new apps and reviews.
-Tamagui is used for the front end. Expo is used for routing.
+Tamagui is used for the front end. Expo is used for routing. App images are stored in an AWS S3 bucket.
+
+## Tech Stack
+- React Native
+- Expo
+- TypeScript
+- Axios
+- AWS
+
 
 ## Resources
 - **Tamagui**: [Tamagui](https://tamagui.dev/docs/intro/installation)
