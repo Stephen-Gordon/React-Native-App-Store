@@ -21,7 +21,7 @@ Tamagui is used for the front end. Expo is used for routing. App images are stor
 </div>
 
 <div align="center">
-  <img src="./src/assets/screenshots/frame3.png"  />
+  <img src="./src/assets/screenshots/frame3.png" width="400px"  />
 </div>
 
 
