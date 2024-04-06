@@ -12,14 +12,17 @@ Tamagui is used for the front end. Expo is used for routing. App images are stor
 - AWS
 
 <h2>Screenshots</h2>
-<p align="center">
-  <img src="./src/assets/screenshots/frame1.png" width="400" />
-  <img src="./src/assets/screenshots/frame3.png" width="400" />
-</p>
+<div align="center">
+  <img src="./src/assets/screenshots/frame1.png"  />
+</div>
 
-<p align="center">
-  <img src="./src/assets/screenshots/frame2.png" width="400" />
-</p>
+<div align="center">
+  <img src="./src/assets/screenshots/frame2.png"  />
+</div>
+
+<div align="center">
+  <img src="./src/assets/screenshots/frame3.png"  />
+</div>
 
 
 
